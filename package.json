@@ -11,7 +11,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "catalyst-graph": "^1.0.1",
-    "dynamic-realm": "^1.0.4"
+    "@asianpersonn/dict-utils": "^1.0.1",
+    "catalyst-graph": "^1.0.6",
+    "dynamic-realm": "^1.0.4",
+    "realm": "^10.10.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
+    "eslint": "^8.3.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.3",
+    "jest": "^27.4.4"
   }
 }
