@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p tsconfig-build.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -13,7 +13,7 @@
   "dependencies": {
     "@asianpersonn/dict-utils": "^1.0.1",
     "catalyst-graph": "^1.0.6",
-    "dynamic-realm": "^1.0.4",
+    "dynamic-realm": "^1.0.5",
     "realm": "^10.10.1"
   },
   "devDependencies": {

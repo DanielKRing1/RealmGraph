@@ -36,8 +36,18 @@ const genSchema = (schemaName: string, properties: string[]): Realm.ObjectSchema
 
 const NODE_SCHEMA_SUFFIX: string = '_NODE';
 const EDGE_SCHEMA_SUFFIX: string = '_EDGE';
-const genNodeSchemaName = (graphName: string): string => `${graphName}${NODE_SCHEMA_SUFFIX}`
-const genEdgeSchemaName = (graphName: string): string => `${graphName}${EDGE_SCHEMA_SUFFIX}`
+const genNodeSchemaName = (graphName: string): string => `${graphName}${NODE_SCHEMA_SUFFIX}`;
+const genEdgeSchemaName = (graphName: string): string => `${graphName}${EDGE_SCHEMA_SUFFIX}`;
+
+const EDGE_NAME_DELIM: string = '-';
+/**
+ * Sort node 1 and 2 id's alphabetically and concat with a delim to create id
+ * 
+ * @param node1Id 
+ * @param node2Id 
+ * @returns 
+ */
+const genEdgeName = (node1Id: string, node2Id: string): string => node1Id.toLowerCase() < node2Id.toLowerCase() ? `${node1Id}${EDGE_NAME_DELIM}${node2Id}` : `${node2Id}${EDGE_NAME_DELIM}${node1Id}`;
 
 type RGSetup = {
     realmPath: string;
@@ -85,15 +95,33 @@ export class RealmGraph {
         
         this.catalystGraph = new CatalystGraph({
             propertyNames,
-            saveNode: (node: CGNode) => this.realm.create(genNodeSchemaName(this.graphName), node),
-            saveEdge: (edge: CGEdge) => this.realm.create(genEdgeSchemaName(this.graphName), edge),
-            getNode: (nodeId: string) => this.realm.objectForPrimaryKey(genNodeSchemaName(this.graphName), nodeId) as CGNode,
-            getEdge: (edgeId: string) => this.realm.objectForPrimaryKey(genEdgeSchemaName(this.graphName), edgeId) as CGEdge,
-            genEdgeId: GenEdgeId;
-            updateNode: UpdateNode;
-            updateEdge: UpdateEdge;
+            saveNode: (node: CGNode) => this.realm.write(() => this.realm.create(this._getNodeSchemaName(), node)),
+            saveEdge: (edge: CGEdge) => this.realm.write(() => this.realm.create(this._getEdgeSchemaName(), edge)),
+            getNode: (nodeId: string) => this.realm.objectForPrimaryKey(this._getNodeSchemaName(), nodeId) as CGNode,
+            getEdge: (edgeId: string) => this.realm.objectForPrimaryKey(this._getEdgeSchemaName(), edgeId) as CGEdge,
+            genEdgeId: genEdgeName,
+            updateNode: (newNode: CGNode) => {
+                // 1. Get node to update
+                const realmNode: (Realm.Object & CGNode) | undefined = this.realm.objectForPrimaryKey(this._getNodeSchemaName(), newNode.id);
+                // Does not exist
+                if(!realmNode) return;
+
+                // 2. Update all properties
+                this.realm.write(() => {
+                    copyRecursive(realmNode, newNode);
+                });
+            },
+            updateEdge: (newEdge: CGEdge) => ,
         });
         
         
+    }
+
+    _getNodeSchemaName() {
+        return genNodeSchemaName(this.graphName);
+    }
+
+    _getEdgeSchemaName() {
+        return genEdgeSchemaName(this.graphName);
     }
 }
