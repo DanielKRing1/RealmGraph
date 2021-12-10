@@ -7,12 +7,21 @@ import { Dict } from './types/global';
 
 const ID_KEY: string = 'id';
 
+const genDefaultGraphRealmPath = (graphName: string): string => `${graphName}.path`;
+
+/**
+ * Create a base schema for node/edge GraphEntities
+ * 
+ * @param schemaName 
+ * @param properties 
+ * @returns 
+ */
 const genSchema = (schemaName: string, properties: string[]): Realm.ObjectSchema => {
     // 1. Create dummy graph entity
-    const graphEntity: Dict<any> = genPropertiesObj(properties);
+    const graphProperties: Dict<any> = genPropertiesObj(properties);
     
     // 2. Replace property values with float data type
-    const schemaProperties: Dict<string> = DictUtils.mutateDict(graphEntity, (key: string, value: any) => 'float');
+    const schemaProperties: Dict<string> = DictUtils.mutateDict(graphProperties, (key: string, value: any) => 'float');
 
     // 3. Add id to schema properties
     return {
@@ -29,8 +38,6 @@ const NODE_SCHEMA_SUFFIX: string = '_NODE';
 const EDGE_SCHEMA_SUFFIX: string = '_EDGE';
 const genNodeSchemaName = (graphName: string): string => `${graphName}${NODE_SCHEMA_SUFFIX}`
 const genEdgeSchemaName = (graphName: string): string => `${graphName}${EDGE_SCHEMA_SUFFIX}`
-
-const genDefaultGraphRealmPath = (graphName: string): string => `${graphName}.path`;
 
 type RGSetup = {
     realmPath: string;
@@ -70,8 +77,8 @@ export class RealmGraph {
 
         // 2. Open realm
         await DynamicRealm.init({ realmPath });
-        // TODO Add way to prevent duplicate saves
-        DynamicRealm.saveSchemas([ nodeSchema, edgeSchema ]);
+        const saveParams: Dict<any>[] = [ nodeSchema, edgeSchema ].map((schema: Realm.ObjectSchema) => ({ realmPath, schema, overwrite: false }));
+        DynamicRealm.saveSchemas(saveParams);
         this.realm = await DynamicRealm.loadRealm(realmPath);
 
         // 3. Create CatalystGraphe
