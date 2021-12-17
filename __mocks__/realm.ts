@@ -10,6 +10,13 @@ type Schema = {
 // REALM MOCK CLASS
 
 export default class Realm {
+
+  static UpdateMode = {
+    Never: 'Never',
+    All: 'All',
+    Modified: 'Modified',
+  }
+
   schema: Schema[] = [];
 
   path: string;

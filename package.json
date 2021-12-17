@@ -4,6 +4,9 @@
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
     "test": "npm run build && npx jest",
     "build": "tsc -p tsconfig-build.json",
@@ -18,8 +21,9 @@
   "license": "ISC",
   "dependencies": {
     "@asianpersonn/dict-utils": "^1.0.3",
+    "@asianpersonn/pagerank": "^1.0.3",
     "catalyst-graph": "^1.0.6",
-    "dynamic-realm": "^1.0.29",
+    "dynamic-realm": "^1.0.30",
     "realm": "^10.10.1"
   },
   "devDependencies": {
