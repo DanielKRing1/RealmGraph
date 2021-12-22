@@ -2,24 +2,24 @@
 # yarn lockfile v1
 
 
-"@asianpersonn/dict-utils@^1.0.0":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@asianpersonn/dict-utils/-/dict-utils-1.0.4.tgz#cbb0f251f34463931fa53fb77897b8c0a095506f"
-  integrity sha512-q/yTUs/5lXIg9TCtRT8Kx/crMRR01IQBRjbe23LuCU/1LVIm+j6SEOOtc+8stsaY0UCPrwZxiR/m0XFhS7QzQw==
-  dependencies:
-    npm-run-all "^4.1.5"
-
 "@asianpersonn/dict-utils@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@asianpersonn/dict-utils/-/dict-utils-1.0.3.tgz#217d3d76e0e1789fb242ea915727235abc9e31c2"
   integrity sha512-UYWK/KG+Mho4tkrEqpzh3xHxvShRf3yn28lHnh219VVBBpLA70cewbbM0BcM9V+pDahTVAHR6GyWtaeauphnTQ==
 
-"@asianpersonn/pagerank@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@asianpersonn/pagerank/-/pagerank-1.0.3.tgz#2864901438d65e8bc8520f2f106cb18c223d2716"
-  integrity sha512-yEEppUwCMD+bWnp+7Y52UsHdXM7X0/drvMChryGssE0XVteP3nmMd83aJBNYlL1x84drevH+HT6z90UEF7YdGg==
+"@asianpersonn/dict-utils@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@asianpersonn/dict-utils/-/dict-utils-1.0.5.tgz#e66ed9b77ba0e20c980c295f6fbf575d0679570c"
+  integrity sha512-mcSrORWYTLu53hmcanIEWN2ESDKU8hHFgKFZtyoKNbxAelZD08FwzWf7dF5lk/N3cWDq4PIUpYSiUksc77omaw==
   dependencies:
-    "@asianpersonn/dict-utils" "^1.0.0"
+    npm-run-all "^4.1.5"
+
+"@asianpersonn/pagerank@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@asianpersonn/pagerank/-/pagerank-1.0.7.tgz#a14027afc2795d226bf5409b4d2709dae808abd1"
+  integrity sha512-blxWb2m/1XzXxGtgwyq85aY2rK56/YiKKj4ZpI9jJRfDF4qY26+b6UOyU3AlllhCx//XgFNPIlX6ygtCh6YGlA==
+  dependencies:
+    "@asianpersonn/dict-utils" "^1.0.5"
 
 "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.16.0":
   version "7.16.0"
@@ -1499,10 +1499,10 @@ domexception@^2.0.1:
   dependencies:
     webidl-conversions "^5.0.0"
 
-dynamic-realm@^1.0.30:
-  version "1.0.30"
-  resolved "https://registry.yarnpkg.com/dynamic-realm/-/dynamic-realm-1.0.30.tgz#becf4aae06a308af9ebde61b4e5ba37c9a970aa1"
-  integrity sha512-MYscTGCjh883Gi3TQn15Ql1d1BeO9Di8VWCuh/UM1j9RGpuNzyBO6W0qmZbKYe8WABvs7E3XkBM9GrTE5Ng+AA==
+dynamic-realm@^1.0.33:
+  version "1.0.33"
+  resolved "https://registry.yarnpkg.com/dynamic-realm/-/dynamic-realm-1.0.33.tgz#532881debf880193067346e119ddf1f5546a0e36"
+  integrity sha512-NmHXdT+izpzBgl/pgpoETG347ox4B1ST840sAMcZSdiYFk4Zr8kz9E4M2T3PPwzuvu1F85kC38zC7lTCcDPqVw==
   dependencies:
     realm "^10.8.0"
 

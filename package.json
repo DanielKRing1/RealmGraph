@@ -14,16 +14,16 @@
     "patch": "npm version patch",
     "commit": "git add . && git commit -m ",
     "push": "git push origin main",
-    "pub": "run-s -c build build:commit patch push pub:npm",
+    "pub": "run-s -c build \"commit -- %npm_config_m%\"",
     "pub:npm": "npm publish"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@asianpersonn/dict-utils": "^1.0.3",
-    "@asianpersonn/pagerank": "^1.0.3",
+    "@asianpersonn/pagerank": "^1.0.7",
     "catalyst-graph": "^1.0.6",
-    "dynamic-realm": "^1.0.30",
+    "dynamic-realm": "^1.0.33",
     "realm": "^10.10.1"
   },
   "devDependencies": {

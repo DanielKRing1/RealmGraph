@@ -1,62 +1,17 @@
-import Realm from 'realm';
 import DictUtils from '@asianpersonn/dict-utils';
-import DynamicRealm from 'dynamic-realm';
-import CatalystGraph, {
-    genPropertiesObj, CGNode, CGEdge, RatingMode, RateReturn, GraphEntity,
-} from 'catalyst-graph';
+import { pageRank, getInitialWeights, redistributeNodeWeight, inflateEdgeAttrs } from '@asianpersonn/pagerank';
+import DynamicRealm, { SaveSchemaParams } from 'dynamic-realm';
+import CatalystGraph, { CGNode, CGEdge, RatingMode, RateReturn, GraphEntity, genPropertiesObj, genCollectiveAverageName, genSingleAverageName } from 'catalyst-graph';
 
+// My imports
+import { genDefaultGraphRealmPath, ID_KEY } from './utils/constants';
+import { genSchema } from './utils/genSchema';
+
+// Types
+import Realm from 'realm';
+import { RGSetup } from './types/RealmGraph';
+import { genNodeSchemaName, genEdgeSchemaName, genEdgeName } from './utils/naming';
 import { Dict } from './types/global';
-import { SaveSchemaParams } from 'dynamic-realm/dist/Functions/types/types';
-
-const ID_KEY: string = 'id';
-
-const genDefaultGraphRealmPath = (graphName: string): string => `${graphName}.path`;
-
-/**
- * Create a base schema for node/edge GraphEntities
- *
- * @param schemaName
- * @param properties
- * @returns
- */
-const genSchema = (schemaName: string, properties: string[]): Realm.ObjectSchema => {
-    // 1. Create dummy graph entity
-    const graphProperties: Dict<any> = genPropertiesObj(properties);
-
-    // 2. Replace property values with float data type
-    const schemaProperties: Dict<string> = DictUtils.mutateDict(graphProperties, (key: string, value: any) => 'float');
-
-    // 3. Add id to schema properties
-    return {
-        name: schemaName,
-        primaryKey: ID_KEY,
-        properties: {
-            ...schemaProperties,
-            [ID_KEY]: 'string',
-        },
-    };
-};
-
-const NODE_SCHEMA_SUFFIX: string = '_NODE';
-const EDGE_SCHEMA_SUFFIX: string = '_EDGE';
-const genNodeSchemaName = (graphName: string): string => `${graphName}${NODE_SCHEMA_SUFFIX}`;
-const genEdgeSchemaName = (graphName: string): string => `${graphName}${EDGE_SCHEMA_SUFFIX}`;
-
-const EDGE_NAME_DELIM: string = '-';
-/**
- * Sort node 1 and 2 id's alphabetically and concat with a delim to create id
- *
- * @param node1Id
- * @param node2Id
- * @returns
- */
-const genEdgeName = (node1Id: string, node2Id: string): string => (node1Id.toLowerCase() < node2Id.toLowerCase() ? `${node1Id}${EDGE_NAME_DELIM}${node2Id}` : `${node2Id}${EDGE_NAME_DELIM}${node1Id}`);
-
-type RGSetup = {
-    realmPath?: string;
-    graphName: string;
-    propertyNames: string[];
-};
 
 export default class RealmGraph {
     graphName: string;
@@ -141,14 +96,6 @@ export default class RealmGraph {
         });
     }
 
-    _getNodeSchemaName() {
-        return genNodeSchemaName(this.graphName);
-    }
-
-    _getEdgeSchemaName() {
-        return genEdgeSchemaName(this.graphName);
-    }
-
     getAllNodes(): Realm.Results<Realm.Object & CGNode> {
         return this.realm.objects(this._getNodeSchemaName());
     }
@@ -163,5 +110,140 @@ export default class RealmGraph {
 
     rate(propertyName: string, nodeIds: string[], rating: number, weights: number[], ratingMode: RatingMode): RateReturn {
         return this.catalystGraph.rate(propertyName, nodeIds, rating, weights, ratingMode);
+    }
+
+    // Page Rank
+
+    _getPageRankNodeMethods() {
+        // 1. All nodes copy
+        const allNodesRawCopy: CGNode[] = this.getAllNodes().map((node: Realm.Object & CGNode) => ({ ...node }));
+        // 2. Get node id
+        const getNodeId = (node: CGNode) => node.id;
+        // 3. Get node attrs
+        //      Get relevant node attributes (weights used for Page Rank)
+        const keysToKeep: string[] = this._getPageRankWeightKeys();
+        const getNodeAttrs = (node: CGNode) => DictUtils.copyDictKeep<number>(node, keysToKeep);
+
+        return {
+            allNodes: allNodesRawCopy,
+            getNodeId,
+            getNodeAttrs,
+        }
+    }
+
+    _getPageRankEdgeMethods(allNodesRaw: CGNode[], allEdgesRaw: Realm.Results<Realm.Object & CGEdge> | CGEdge[] = this.getAllEdges()) {
+        // 1. Node map
+        const nodeMap: Dict<CGNode> = allNodesRaw.reduce((nodeMap: Dict<CGNode>, node: CGNode) => {
+            const id: string = node.id;
+            nodeMap[id] = node;
+
+            return nodeMap;
+        }, {});
+        
+        // 2. All edges copy
+        const allEdgesRawCopy: CGEdge[] = allEdgesRaw.map((edge: CGEdge) => ({ ...edge }));
+        const edgeMap: Dict<CGEdge> = allEdgesRawCopy.reduce((edgeMap: Dict<CGEdge>, edge: CGEdge) => {
+            const id: string = edge.id;
+            edgeMap[id] = edge;
+
+            return edgeMap;
+        }, {});
+
+        // 3. Get a node's edges
+        const getEdges = (node: CGNode): CGEdge[] => node.edgeIds.map((edgeId: string) => edgeMap[edgeId]);
+
+        // 4. Get edge attrs
+        const keysToKeep: string[] = this._getPageRankWeightKeys();
+        const getEdgeAttrs = (edge: CGEdge) => DictUtils.copyDictKeep(edge, keysToKeep);
+
+        // 5. Get destination node, given a node and one of its edges
+        const getDestinationNode = (node: CGNode, edge: CGEdge): CGNode => {
+            const destinationNodeId: string = edge.nodeId1 == node.id ? edge.nodeId2 : edge.nodeId1;
+            const destinationNode: CGNode = nodeMap[destinationNodeId];
+
+            return destinationNode;
+        }
+
+        return {
+            allEdges: allEdgesRawCopy,
+            getEdges,
+            getEdgeAttrs,
+            getDestinationNode,
+        }
+    }
+
+    /**
+     * 1.2. Get all property-related keys to keep for page rank
+     * @returns 
+     */
+    _getPageRankWeightKeys() {
+        const keysToKeep: string[] = this.propertyNames.reduce((keysToKeep: string[], propertyName: string) => {
+            // 1.2.1. Gen key names to keep
+            const singleKey: string = genSingleAverageName(propertyName);
+            const collectiveKey: string = genCollectiveAverageName(propertyName);
+            
+            // 1.2.2. Record key names to keep
+            keysToKeep.push(singleKey, collectiveKey);
+
+            return keysToKeep;
+        }, []);
+
+        return keysToKeep;
+    }
+
+    pageRank(iterations: number = 50, dampingFactor: number = 0.85) {
+        // 1. Get node methods
+        const { allNodes, getNodeId, getNodeAttrs } = this._getPageRankNodeMethods();
+
+        // 2. Get edge methods
+        const { getEdges, getEdgeAttrs, getDestinationNode } = this._getPageRankEdgeMethods(allNodes);
+
+        // 3. Get initial weighted node map: Id -> pointing to each Node's weights divided by sum of all nodes' weights
+        const initialMap: Dict<Dict<number>> = getInitialWeights(allNodes, getNodeId, getNodeAttrs);
+
+        // 4. Page Rank
+        return pageRank(initialMap, allNodes, getNodeId, getEdges, getEdgeAttrs, getDestinationNode, iterations, dampingFactor);
+    }
+
+    recommend(centralNodeIds: string[], nodeTargetCentralWeight: number, edgeInflationMagnitude: number, iterations: number = 50, dampingFactor: number = 0.85) {
+        // 1. Get node methods
+        const { allNodes: allNodesRawCopy, getNodeId, getNodeAttrs } = this._getPageRankNodeMethods();
+
+        // 2. Get initial weighted node map: Id -> pointing to each Node's weights divided by sum of all nodes' weights
+        const initialMapRaw: Dict<Dict<number>> = getInitialWeights(allNodesRawCopy, getNodeId, getNodeAttrs);
+
+        // 3. Redistribute weights
+        const initialMapBiased: Dict<Dict<number>> = redistributeNodeWeight(initialMapRaw, nodeTargetCentralWeight, centralNodeIds);
+        // console.log(rawInitialMap);
+        // console.log(initialMapBiased);
+
+        // 4. Convert biased initial map -> all nodes list
+        const allNodesBiased: CGNode[] = allNodesRawCopy.map((node: CGNode) => ({
+            ...node,
+            ...initialMapBiased[node.id],
+        }));
+        // console.log(allNodesBiased);
+
+        // console.log(this.getAllEdges());
+
+        // 5. Get edge methods
+        const { allEdges, getEdges, getEdgeAttrs, getDestinationNode } = this._getPageRankEdgeMethods(allNodesBiased);
+        const centralNodeIdSet: Set<string> = new Set(centralNodeIds);
+        const isConnectedToCentralNode = (edge: CGEdge) => centralNodeIdSet.has(edge.nodeId1) || centralNodeIdSet.has(edge.nodeId2);
+        const allEdgesInflated: CGEdge[] = inflateEdgeAttrs(allEdges, getEdgeAttrs, edgeInflationMagnitude, isConnectedToCentralNode);
+        const { getEdges: getEdgesInflated } = this._getPageRankEdgeMethods(allNodesBiased, allEdgesInflated);
+
+        // 6. Page Rank
+        return pageRank(initialMapBiased, allNodesBiased, getNodeId, getEdgesInflated, getEdgeAttrs, getDestinationNode, iterations, dampingFactor);
+    }
+
+    // Internal Methods
+    
+    _getNodeSchemaName() {
+        return genNodeSchemaName(this.graphName);
+    }
+
+    _getEdgeSchemaName() {
+        return genEdgeSchemaName(this.graphName);
     }
 }
