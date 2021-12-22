@@ -1,5 +1,5 @@
 {
-  "name": "@asianpersonn/realm-graph",
+  "name": "realm-graph",
   "version": "1.0.1",
   "description": "",
   "main": "dist/index.js",
@@ -15,7 +15,7 @@
     "commit": "git add . && git commit -m ",
     "push": "git push origin main",
     "pub": "run-s -c build \"commit -- %npm_config_m%\" patch push pub:npm",
-    "pub:npm": "npm publish"
+    "pub:npm": "npm publish --scope=@asianpersonn"
   },
   "author": "",
   "license": "ISC",
