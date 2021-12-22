@@ -1,6 +1,6 @@
 {
   "name": "realm-graph",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -15,7 +15,7 @@
     "commit": "git add . && git commit -m ",
     "push": "git push origin main",
     "pub": "run-s -c build \"commit -- %npm_config_m%\" patch push pub:npm",
-    "pub:npm": "npm publish --scope=@asianpersonn"
+    "pub:npm": "npm publish --access public"
   },
   "author": "",
   "license": "ISC",
