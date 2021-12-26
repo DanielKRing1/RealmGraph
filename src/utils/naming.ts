@@ -1,7 +1,14 @@
-export const NODE_SCHEMA_SUFFIX: string = '_NODE';
-export const EDGE_SCHEMA_SUFFIX: string = '_EDGE';
-export const genNodeSchemaName = (graphName: string): string => `${graphName}${NODE_SCHEMA_SUFFIX}`;
-export const genEdgeSchemaName = (graphName: string): string => `${graphName}${EDGE_SCHEMA_SUFFIX}`;
+const NODE_SCHEMA_SUFFIX: string = 'NODE';
+const EDGE_SCHEMA_SUFFIX: string = 'EDGE';
+const SUFFIX_DELIMITER: string = '_';
+export const genNodeSchemaName = (graphName: string): string => `${graphName}${SUFFIX_DELIMITER}${NODE_SCHEMA_SUFFIX}`;
+export const genEdgeSchemaName = (graphName: string): string => `${graphName}${SUFFIX_DELIMITER}${EDGE_SCHEMA_SUFFIX}`;
+export const getBaseNameFromSchemaName = (schemaName: string) => {
+    const index: number = schemaName.lastIndexOf(SUFFIX_DELIMITER);
+    const baseName: string = schemaName.slice(0, index);
+
+    return baseName;
+};
 
 export const EDGE_NAME_DELIM: string = '-';
 /**
