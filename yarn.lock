@@ -14,6 +14,11 @@
   dependencies:
     npm-run-all "^4.1.5"
 
+"@asianpersonn/heap@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@asianpersonn/heap/-/heap-1.0.2.tgz#a9a8ba24b8432579bc31470fac3c978c2b4e6c66"
+  integrity sha512-Ic8Wvbkt75C6YlylxP2QytHDFu86z0zwV887lCLNJQHlXHIOUCMSL656DbY9yicUd0NLfpdmTjplMEiH1LtBPQ==
+
 "@asianpersonn/pagerank@^1.0.7":
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/@asianpersonn/pagerank/-/pagerank-1.0.7.tgz#a14027afc2795d226bf5409b4d2709dae808abd1"

@@ -21,6 +21,7 @@
   "license": "ISC",
   "dependencies": {
     "@asianpersonn/dict-utils": "^1.0.3",
+    "@asianpersonn/heap": "^1.0.2",
     "@asianpersonn/pagerank": "^1.0.7",
     "catalyst-graph": "^1.0.6",
     "dynamic-realm": "^1.0.33",
