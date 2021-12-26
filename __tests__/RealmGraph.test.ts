@@ -1,6 +1,8 @@
-import { RatingMode } from 'catalyst-graph';
+import Heap from '@asianpersonn/heap';
+import { genSingleAverageName, RatingMode } from 'catalyst-graph';
 import RealmGraph from '../src';
 import { Dict } from '../src/types/global';
+import { RankedNode } from '../src/types/RealmGraph';
 
 // @ts-ignore
 jest.mock('realm');
@@ -13,7 +15,7 @@ const graph: RealmGraph = new RealmGraph({
 });
 
 // @ts-ignore
-describe('GlobalRealm', () => {
+describe('RealmGraph', () => {
   // @ts-ignore
   it('Should throw an error and have a null realm before being initialized', async () => {
     await graph.init();
@@ -29,6 +31,9 @@ describe('GlobalRealm', () => {
 
     graph.rate('happy', ['basketball', 'sleep'], 7, [1, 1], RatingMode.Single);
     graph.rate('happy', ['basketball', 'sleep'], 7, [1, 1], RatingMode.Collective);
+
+    const map: Dict<Dict<number>> = graph.pageRank(50, 1);
+    console.log(map);
 
     console.log(graph.getAllNodes());
     console.log(graph.getAllEdges());
@@ -48,9 +53,16 @@ describe('Page Rank', () => {
   });
 
   it('Should be able to run redistributed PageRank recommendations', () => {
-    const map: Dict<Dict<number>> = graph.recommend(['sleep'], 0.8, 50);
+    const map: Dict<Dict<number>> = graph.recommendRank(['sleep'], 0.8, 50);
 
     console.log(map);
+  });
+
+  it('Should be able to organize PageRank recommendations into a heap', () => {
+    const desiredRankKey: string = genSingleAverageName('happy');
+    const heap: Heap<RankedNode> = graph.recommend(desiredRankKey, ['sleep'], 0.8, 50);
+
+    console.log(heap._list);
   });
 });
 
@@ -95,14 +107,21 @@ describe('Page Rank more complex graph', () => {
     graph.rate('happy', ['meditate', 'eat', 'sleep'], 9, [1, 1, 1], RatingMode.Single);
     graph.rate('happy', ['meditate', 'eat', 'sleep'], 9, [1, 1, 1], RatingMode.Collective);
 
-    const map: Dict<Dict<number>> = graph.pageRank(1, 1);
+    const map: Dict<Dict<number>> = graph.pageRank(50, 1);
 
     console.log(map);
   });
 
   it('Should be able to run redistributed PageRank recommendations', () => {
-    const map: Dict<Dict<number>> = graph.recommend(['sleep', 'study'], 0.8, 0.1, 1, 1);
+    const map: Dict<Dict<number>> = graph.recommendRank(['sleep', 'study'], 0.8, 0.01, 50, 1);
 
     console.log(map);
+  });
+
+  it('Should be able to organize PageRank recommendations into a heap', () => {
+    const desiredRankKey: string = genSingleAverageName('happy');
+    const heap: Heap<RankedNode> = graph.recommend(desiredRankKey, ['sleep', 'study'], 0.8, 0.01, 50, 1);
+
+    console.log(heap);
   });
 });
