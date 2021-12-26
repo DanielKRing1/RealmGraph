@@ -40,6 +40,8 @@ export default class Realm {
     this.schemaVersion = params.schemaVersion || 0;
   }
 
+  close() {}
+
   // Read
   objects(schemaName: string): any[] {
     return this.data[schemaName];
