@@ -16,6 +16,8 @@ import Heap from '@asianpersonn/heap';
 import { genInitError } from './errors/RealmGraphManager';
 import { RGManagerCreate } from './types/realmGraphManager';
 
+export { RatingMode } from 'catalyst-graph';
+
 export default class RealmGraph {
     _isInitialized: boolean = false;
 
