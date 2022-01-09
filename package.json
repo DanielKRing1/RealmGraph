@@ -1,43 +1,43 @@
 {
-  "name": "@asianpersonn/realm-graph",
-  "version": "1.0.3",
-  "description": "",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist/**/*"
-  ],
-  "scripts": {
-    "test": "npm run build && npx jest",
-    "build": "tsc -p tsconfig-build.json",
-    "build:commit": "npm run commit -- \"New build\"",
-    "patch": "npm version patch",
-    "commit": "git add . && git commit -m ",
-    "push": "git push origin main",
-    "pub": "run-s -c build \"commit -- %npm_config_m%\" patch push pub:npm",
-    "pub:npm": "npm publish --access public"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@asianpersonn/dict-utils": "^1.0.3",
-    "@asianpersonn/heap": "^1.0.2",
-    "@asianpersonn/pagerank": "^1.0.7",
-    "catalyst-graph": "^1.0.6",
-    "dynamic-realm": "^1.0.33",
-    "npm-run-all": "^4.1.5",
-    "realm": "^10.10.1"
-  },
-  "devDependencies": {
-    "@types/jest": "^27.0.3",
-    "@typescript-eslint/eslint-plugin": "^5.7.0",
-    "@typescript-eslint/parser": "^5.7.0",
-    "eslint": "^8.4.1",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.3",
-    "jest": "^27.4.4",
-    "prettier": "2.5.1",
-    "ts-jest": "^27.1.1",
-    "typescript": "^4.5.3"
-  }
+    "name": "@asianpersonn/realm-graph",
+    "version": "1.0.3",
+    "description": "",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist/**/*"
+    ],
+    "scripts": {
+        "test": "npm run build && npx jest",
+        "build": "tsc -p tsconfig-build.json",
+        "build:commit": "npm run commit -- \"New build\"",
+        "patch": "npm version patch",
+        "commit": "git add . && git commit -m ",
+        "push": "git push origin main",
+        "pub": "run-s -c build \"commit -- %npm_config_m%\" patch push pub:npm",
+        "pub:npm": "npm publish --access public"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@asianpersonn/dict-utils": "^1.0.3",
+        "@asianpersonn/heap": "^1.0.2",
+        "@asianpersonn/pagerank": "^1.0.7",
+        "catalyst-graph": "^1.0.8",
+        "dynamic-realm": "^1.0.33",
+        "npm-run-all": "^4.1.5",
+        "realm": "^10.10.1"
+    },
+    "devDependencies": {
+        "@types/jest": "^27.0.3",
+        "@typescript-eslint/eslint-plugin": "^5.7.0",
+        "@typescript-eslint/parser": "^5.7.0",
+        "eslint": "^8.4.1",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-plugin-import": "^2.25.3",
+        "jest": "^27.4.4",
+        "prettier": "2.5.1",
+        "ts-jest": "^27.1.1",
+        "typescript": "^4.5.3"
+    }
 }
