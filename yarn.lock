@@ -1010,9 +1010,9 @@ caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
 
-catalyst-graph@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/catalyst-graph/-/catalyst-graph-1.0.8.tgz#65c986defa79010bf5fffab4ae9d1042239f8057"
+catalyst-graph@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/catalyst-graph/-/catalyst-graph-1.0.9.tgz#dc43a5b0df5659c696d120f75d5d301145a44dd9"
 
 chalk@^2.0.0, chalk@^2.4.1:
   version "2.4.2"
