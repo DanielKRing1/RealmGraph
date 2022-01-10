@@ -170,7 +170,7 @@ export default class RealmGraph {
 
     _getPageRankNodeMethods() {
         // 1. All nodes copy
-        const allNodesRawCopy: CGNode[] = this.getAllNodes().map((node: Realm.Object & CGNode) => ({ ...node }));
+        const allNodesRawCopy: CGNode[] = this.getAllNodes().map((node: Realm.Object & CGNode) => node.toJSON());
         // 2. Get node id
         const getNodeId = (node: CGNode) => node.id;
         // 3. Get node attrs
@@ -185,7 +185,7 @@ export default class RealmGraph {
         };
     }
 
-    _getPageRankEdgeMethods(allNodesRaw: CGNode[], allEdgesRaw: Realm.Results<Realm.Object & CGEdge> | CGEdge[] = this.getAllEdges()) {
+    _getPageRankEdgeMethods(allNodesRaw: CGNode[], allEdgesRaw: CGEdge[] = this.getAllEdges().map((realmEdge: Realm.Object & CGEdge) => realmEdge.toJSON())) {
         // 1. Node map
         const nodeMap: Dict<CGNode> = allNodesRaw.reduce((nodeMap: Dict<CGNode>, node: CGNode) => {
             const id: string = node.id;
@@ -195,7 +195,7 @@ export default class RealmGraph {
         }, {});
 
         // 2. All edges copy
-        const allEdgesRawCopy: CGEdge[] = allEdgesRaw.map((edge: CGEdge) => ({ ...edge }));
+        const allEdgesRawCopy: CGEdge[] = allEdgesRaw.map((edge: CGEdge) => edge);
         const edgeMap: Dict<CGEdge> = allEdgesRawCopy.reduce((edgeMap: Dict<CGEdge>, edge: CGEdge) => {
             const id: string = edge.id;
             edgeMap[id] = edge;
@@ -371,6 +371,8 @@ export class RealmGraphManager {
 
         // 1. Get realm that this RealmGraphManager uses for all of its RealmGraphs
         this.realm = await DynamicRealm.loadRealm(this.realmPath);
+        console.log('LOADED REALM');
+        console.log(this.realm);
 
         console.log(this.realm);
 
