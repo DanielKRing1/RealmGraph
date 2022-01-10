@@ -38,24 +38,26 @@ export default class RealmGraph {
         this._dynamicRealmPath = dynamicRealmPath;
         this.realm = realm;
         this.realmPath = !!realm ? realm.path : graphRealmPath;
-        
+
         this.graphName = graphName;
         this.propertyNames = propertyNames;
     }
-    
-    reloadRealm(upToDateRealm: Realm): void { this.realm = upToDateRealm; }
+
+    reloadRealm(upToDateRealm: Realm): void {
+        this.realm = upToDateRealm;
+    }
 
     /**
      * Init must be called before RealmGraph can be used
      */
     async init() {
-        if(this.isInitialized()) return;
+        if (this.isInitialized()) return;
 
         // 1. Open meta realm...
-        if(!DynamicRealm.isInitialized()) await DynamicRealm.init({ realmPath: this._dynamicRealmPath });
+        if (!DynamicRealm.isInitialized()) await DynamicRealm.init({ realmPath: this._dynamicRealmPath });
 
         // 2. If Graph's Realm is not provided...
-        if(!this.realm) {
+        if (!this.realm) {
             // 2.1. Create node + edge schemas
             const baseSchema: Realm.ObjectSchema = genSchema(this.graphName, this.propertyNames);
             const nodeSchema: Realm.ObjectSchema = {
@@ -85,31 +87,47 @@ export default class RealmGraph {
         // 3. Create CatalystGraph
         this.catalystGraph = new CatalystGraph({
             propertyNames: this.propertyNames,
-            saveNode: (node: CGNode) => this.realm!.write(() => this.realm!.create(this._getNodeSchemaName(), node, Realm.UpdateMode.Never)),
-            saveEdge: (edge: CGEdge) => this.realm!.write(() => this.realm!.create(this._getEdgeSchemaName(), edge, Realm.UpdateMode.Never)),
+            saveNode: (node: CGNode) => {
+                try {
+                    this.realm!.write(() => this.realm!.create(this._getNodeSchemaName(), node, Realm.UpdateMode.Never));
+                } catch (err) {
+                    // Error thrown to prevent writing duplicate; Do nothing
+                }
+            },
+            saveEdge: (edge: CGEdge) => {
+                try {
+                    this.realm!.write(() => this.realm!.create(this._getEdgeSchemaName(), edge, Realm.UpdateMode.Never));
+                } catch (err) {
+                    // Error thrown to prevent writing duplicate; Do nothing
+                }
+            },
             getNode: (nodeId: string) => this.realm!.objectForPrimaryKey(this._getNodeSchemaName(), nodeId) as CGNode,
             getEdge: (edgeId: string) => this.realm!.objectForPrimaryKey(this._getEdgeSchemaName(), edgeId) as CGEdge,
             genEdgeId: genEdgeName,
             updateNode: (newNode: CGNode) => {
+                // Update logic now happens directly in 'rate' method
+                return;
                 // 1. Get node to update
                 const realmNode: (Realm.Object & CGNode) | undefined = this.realm!.objectForPrimaryKey(this._getNodeSchemaName(), newNode.id);
                 // Does not exist
-                if (!realmNode) return;
+                if (!realmNode || (typeof realmNode === 'object' && Object.keys(realmNode!).length === 0)) return;
 
                 // 2. Update all properties
                 this.realm!.write(() => {
-                    DictUtils.updateRecursive(realmNode, newNode);
+                    DictUtils.updateRecursive(realmNode!, newNode);
                 });
             },
             updateEdge: (newEdge: CGEdge) => {
+                // Update logic now happens directly in 'rate' method
+                return;
                 // 1. Get node to update
                 const realmEdge: (Realm.Object & CGNode) | undefined = this.realm!.objectForPrimaryKey(this._getNodeSchemaName(), newEdge.id);
                 // Does not exist
-                if (!realmEdge) return;
+                if (!realmEdge || (typeof realmEdge === 'object' && Object.keys(realmEdge!).length === 0)) return;
 
                 // 2. Update all properties
                 this.realm!.write(() => {
-                    DictUtils.updateRecursive(realmEdge, newEdge);
+                    DictUtils.updateRecursive(realmEdge!, newEdge);
                 });
             },
         });
@@ -138,7 +156,14 @@ export default class RealmGraph {
     rate(propertyName: string, nodeIds: string[], rating: number, weights: number[], ratingMode: RatingMode): RateReturn {
         this._throwInitError('rate');
 
-        return this.catalystGraph.rate(propertyName, nodeIds, rating, weights, ratingMode);
+        let rateResult: RateReturn;
+
+        // Wrap in write transaction to apply updates directly to Realm objects during rate
+        this.realm?.write(() => {
+            rateResult = this.catalystGraph.rate(propertyName, nodeIds, rating, weights, ratingMode);
+        });
+
+        return rateResult!;
     }
 
     // Page Rank
@@ -157,7 +182,7 @@ export default class RealmGraph {
             allNodes: allNodesRawCopy,
             getNodeId,
             getNodeAttrs,
-        }
+        };
     }
 
     _getPageRankEdgeMethods(allNodesRaw: CGNode[], allEdgesRaw: Realm.Results<Realm.Object & CGEdge> | CGEdge[] = this.getAllEdges()) {
@@ -168,7 +193,7 @@ export default class RealmGraph {
 
             return nodeMap;
         }, {});
-        
+
         // 2. All edges copy
         const allEdgesRawCopy: CGEdge[] = allEdgesRaw.map((edge: CGEdge) => ({ ...edge }));
         const edgeMap: Dict<CGEdge> = allEdgesRawCopy.reduce((edgeMap: Dict<CGEdge>, edge: CGEdge) => {
@@ -191,26 +216,26 @@ export default class RealmGraph {
             const destinationNode: CGNode = nodeMap[destinationNodeId];
 
             return destinationNode;
-        }
+        };
 
         return {
             allEdges: allEdgesRawCopy,
             getEdges,
             getEdgeAttrs,
             getDestinationNode,
-        }
+        };
     }
 
     /**
      * 1.2. Get all property-related keys to keep for page rank
-     * @returns 
+     * @returns
      */
     _getPageRankWeightKeys() {
         const keysToKeep: string[] = this.propertyNames.reduce((keysToKeep: string[], propertyName: string) => {
             // 1.2.1. Gen key names to keep
             const singleKey: string = genSingleAverageName(propertyName);
             const collectiveKey: string = genCollectiveAverageName(propertyName);
-            
+
             // 1.2.2. Record key names to keep
             keysToKeep.push(singleKey, collectiveKey);
 
@@ -270,7 +295,14 @@ export default class RealmGraph {
         return pageRank(initialMapBiased, allNodesBiased, getNodeId, getEdgesInflated, getEdgeAttrs, getDestinationNode, iterations, dampingFactor);
     }
 
-    recommend(desiredAttrKey: string, centralNodeIds: string[], nodeTargetCentralWeight: number, edgeInflationMagnitude: number, iterations: number = 50, dampingFactor: number = 0.85): Heap<RankedNode> {
+    recommend(
+        desiredAttrKey: string,
+        centralNodeIds: string[],
+        nodeTargetCentralWeight: number,
+        edgeInflationMagnitude: number,
+        iterations: number = 50,
+        dampingFactor: number = 0.85
+    ): Heap<RankedNode> {
         this._throwInitError('recommend');
 
         const recommendationMap: Dict<Dict<number>> = this.recommendRank(centralNodeIds, nodeTargetCentralWeight, edgeInflationMagnitude, iterations, dampingFactor);
@@ -289,7 +321,7 @@ export default class RealmGraph {
     }
 
     // Internal Methods
-    
+
     _getNodeSchemaName() {
         return genNodeSchemaName(this.graphName);
     }
@@ -298,15 +330,18 @@ export default class RealmGraph {
         return genEdgeSchemaName(this.graphName);
     }
 
-    
-    isInitialized() { return this._isInitialized; }
+    isInitialized() {
+        return this._isInitialized;
+    }
 
-    _throwInitError(callingMethodName: string) { if(!this.isInitialized()) throw genInitError(callingMethodName); }
-};
+    _throwInitError(callingMethodName: string) {
+        if (!this.isInitialized()) throw genInitError(callingMethodName);
+    }
+}
 
 export class RealmGraphManager {
     _isInitialized: boolean = false;
-    
+
     _dynamicRealmPath: string | undefined;
     realmPath: string;
     realm!: Realm;
@@ -316,9 +351,9 @@ export class RealmGraphManager {
     /**
      * All of this Manager's RealmGraphs will use the same realmPath
      * To avoid this, create other RealmGraphManagers or spawn individual RealmGraphs at other realmPaths
-     * 
-     * @param realmPath 
-     * @param dynamicRealmPath 
+     *
+     * @param realmPath
+     * @param dynamicRealmPath
      */
     constructor(realmPath: string = DEFAULT_REALM_GRAPH_MANAGER_REALM_PATH, dynamicRealmPath?: string) {
         this._dynamicRealmPath = dynamicRealmPath;
@@ -330,9 +365,9 @@ export class RealmGraphManager {
      * Reads all schemas from DynamicRealm and tries to load them as graphs
      */
     async init() {
-        if(this.isInitialized()) return;
+        if (this.isInitialized()) return;
         // Open meta realm...
-        if(!DynamicRealm.isInitialized()) await DynamicRealm.init({ realmPath: this._dynamicRealmPath });
+        if (!DynamicRealm.isInitialized()) await DynamicRealm.init({ realmPath: this._dynamicRealmPath });
 
         // 1. Get realm that this RealmGraphManager uses for all of its RealmGraphs
         this.realm = await DynamicRealm.loadRealm(this.realmPath);
@@ -341,7 +376,7 @@ export class RealmGraphManager {
 
         // 2. Initialize a RealmGraph for each graph
         const graphNames: string[] = this.getGraphNames();
-        for(let graphName of graphNames) {
+        for (let graphName of graphNames) {
             // 2.1. Get graph's node schema name
             const cgNodeSchemaName: string = genNodeSchemaName(graphName);
             // 2.2. Get graph's property names
@@ -349,7 +384,7 @@ export class RealmGraphManager {
             const propertyNames: string[] = Object.keys(cgNodeProperties);
 
             // 2.3. Now, this graph's RealmGraph can be initialized
-            const realmGraph: RealmGraph = new RealmGraph({ realm: this.realm, graphName, propertyNames })
+            const realmGraph: RealmGraph = new RealmGraph({ realm: this.realm, graphName, propertyNames });
             await realmGraph.init();
 
             // 2.4. Cache this graph's RealmGraph
@@ -374,22 +409,30 @@ export class RealmGraphManager {
             // 2.2. Add to set
             graphNames.add(graphName);
         });
-        
+
         return Array.from(graphNames);
     }
 
-    _addToCache(graphName: string, realmGraph: RealmGraph) { this.realmGraphCache[graphName] = realmGraph; }
+    _addToCache(graphName: string, realmGraph: RealmGraph) {
+        this.realmGraphCache[graphName] = realmGraph;
+    }
 
-    get(graphName: string): RealmGraph | undefined { return this.realmGraphCache[graphName]; }
-    getAllGraphNames() { return Object.keys(this.realmGraphCache); }
-    getAllGraphs() { return Object.values(this.realmGraphCache); }
+    get(graphName: string): RealmGraph | undefined {
+        return this.realmGraphCache[graphName];
+    }
+    getAllGraphNames() {
+        return Object.keys(this.realmGraphCache);
+    }
+    getAllGraphs() {
+        return Object.values(this.realmGraphCache);
+    }
 
     async create(args: RGManagerCreate) {
         this._throwInitError('Create');
 
         // 1. Close this manager's realm
         this.realm.close();
-        
+
         // 2. Create new RealmGraph at this manager's realmPath
         const newRealmGraph: RealmGraph = new RealmGraph({
             ...args,
@@ -399,25 +442,29 @@ export class RealmGraphManager {
         // 3. New RealmGraph will load a new Realm
         await newRealmGraph.init();
         const upToDateRealm: Realm = newRealmGraph.realm!;
-        
+
         // 4. Add new RealmGraph to cache
         const { graphName } = args;
         this._addToCache(graphName, newRealmGraph);
-        
+
         // 5. Update this manager's Realm
         this.realm = upToDateRealm;
 
         console.log(this.getAllGraphs());
-        
+
         // 6. Reload realm of all RealmGraphs using same realmPath
         const allRealmGraphs: RealmGraph[] = this.getAllGraphs();
-        console.log(allRealmGraphs)
-        for(let realmGraph of allRealmGraphs) {
+        console.log(allRealmGraphs);
+        for (let realmGraph of allRealmGraphs) {
             realmGraph.reloadRealm(this.realm);
         }
     }
 
-    isInitialized() { return this._isInitialized; }
+    isInitialized() {
+        return this._isInitialized;
+    }
 
-    _throwInitError(callingMethodName: string) { if(!this.isInitialized()) throw genInitError(callingMethodName); }
-};
+    _throwInitError(callingMethodName: string) {
+        if (!this.isInitialized()) throw genInitError(callingMethodName);
+    }
+}
