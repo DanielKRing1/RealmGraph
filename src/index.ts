@@ -101,16 +101,22 @@ export default class RealmGraph {
                     // Error thrown to prevent writing duplicate; Do nothing
                 }
             },
-            getNode: (nodeId: string) => this.realm!.objectForPrimaryKey(this._getNodeSchemaName(), nodeId) as CGNode,
-            getEdge: (edgeId: string) => this.realm!.objectForPrimaryKey(this._getEdgeSchemaName(), edgeId) as CGEdge,
+            getNode: (nodeId: string) => {
+                const node: (Realm.Object & CGNode) | undefined = this.realm!.objectForPrimaryKey(this._getNodeSchemaName(), nodeId);
+                return node != undefined ? node.toJSON() : undefined;
+            },
+            getEdge: (edgeId: string) => {
+                const edge: (Realm.Object & CGEdge) | undefined = this.realm!.objectForPrimaryKey(this._getEdgeSchemaName(), edgeId);
+                return edge != undefined ? edge.toJSON() : undefined;
+            },
             genEdgeId: genEdgeName,
             updateNode: (newNode: CGNode) => {
                 // Update logic now happens directly in 'rate' method
-                return;
+                // return;
                 // 1. Get node to update
                 const realmNode: (Realm.Object & CGNode) | undefined = this.realm!.objectForPrimaryKey(this._getNodeSchemaName(), newNode.id);
                 // Does not exist
-                if (!realmNode || (typeof realmNode === 'object' && Object.keys(realmNode!).length === 0)) return;
+                if (!realmNode || (!!realmNode && Object.keys(realmNode!.toJSON()).length === 0)) return;
 
                 // 2. Update all properties
                 this.realm!.write(() => {
@@ -119,11 +125,11 @@ export default class RealmGraph {
             },
             updateEdge: (newEdge: CGEdge) => {
                 // Update logic now happens directly in 'rate' method
-                return;
+                // return;
                 // 1. Get node to update
-                const realmEdge: (Realm.Object & CGNode) | undefined = this.realm!.objectForPrimaryKey(this._getNodeSchemaName(), newEdge.id);
+                const realmEdge: (Realm.Object & CGNode) | undefined = this.realm!.objectForPrimaryKey(this._getEdgeSchemaName(), newEdge.id);
                 // Does not exist
-                if (!realmEdge || (typeof realmEdge === 'object' && Object.keys(realmEdge!).length === 0)) return;
+                if (!realmEdge || (!!realmEdge && Object.keys(realmEdge!.toJSON()).length === 0)) return;
 
                 // 2. Update all properties
                 this.realm!.write(() => {
@@ -159,9 +165,9 @@ export default class RealmGraph {
         let rateResult: RateReturn;
 
         // Wrap in write transaction to apply updates directly to Realm objects during rate
-        this.realm?.write(() => {
-            rateResult = this.catalystGraph.rate(propertyName, nodeIds, rating, weights, ratingMode);
-        });
+        // this.realm?.write(() => {
+        rateResult = this.catalystGraph.rate(propertyName, nodeIds, rating, weights, ratingMode);
+        // });
 
         return rateResult!;
     }
