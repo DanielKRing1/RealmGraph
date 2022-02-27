@@ -43,7 +43,7 @@ export default class RealmGraph {
         this.propertyNames = propertyNames;
     }
 
-    reloadRealm(upToDateRealm: Realm): void {
+    setRealm(upToDateRealm: Realm): void {
         this.realm = upToDateRealm;
     }
 
@@ -435,7 +435,7 @@ export class RealmGraphManager {
         return Object.values(this.realmGraphCache);
     }
 
-    async create(args: RGManagerCreate) {
+    async create(args: RGManagerCreate): Promise<RealmGraph> {
         this._throwInitError('Create');
 
         // 1. Close this manager's realm
@@ -458,14 +458,16 @@ export class RealmGraphManager {
         // 5. Update this manager's Realm
         this.realm = upToDateRealm;
 
-        console.log(this.getAllGraphs());
+        // console.log(this.getAllGraphs());
 
         // 6. Reload realm of all RealmGraphs using same realmPath
         const allRealmGraphs: RealmGraph[] = this.getAllGraphs();
-        console.log(allRealmGraphs);
+        // console.log(allRealmGraphs);
         for (let realmGraph of allRealmGraphs) {
-            realmGraph.reloadRealm(this.realm);
+            realmGraph.setRealm(this.realm);
         }
+
+        return newRealmGraph;
     }
 
     isInitialized() {
