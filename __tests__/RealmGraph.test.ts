@@ -124,4 +124,35 @@ describe('Page Rank more complex graph', () => {
 
     console.log(heap);
   });
+
+  it('Should be able to run redistributed PageRank recommendations', () => {
+    const map: Dict<Dict<number>> = graph.recommendRank(['sleep', 'study'], 0.8, 0, 50, 1);
+
+    console.log('STARTING HERE----');
+    console.log(map);
+  });
+
+  it('Should be able to run redistributed PageRank recommendations', () => {
+    const map: Dict<Dict<number>> = graph.recommendRank(['sleep', 'study'], 0.8, 0.01, 50, 1);
+
+    console.log(map);
+  });
+
+  it('Should be able to run redistributed PageRank recommendations', () => {
+    const map: Dict<Dict<number>> = graph.recommendRank(['sleep', 'study'], 0.8, 0.1, 50, 1);
+
+    console.log(map);
+  });
+
+  it('Should be able to run redistributed PageRank recommendations', () => {
+    const map: Dict<Dict<number>> = graph.recommendRank(['sleep', 'study'], 0.8, 0.25, 50, 1);
+
+    console.log(map);
+  });
+
+  it('Should be able to run redistributed PageRank recommendations', () => {
+    const map: Dict<Dict<number>> = graph.recommendRank(['sleep', 'study'], 0.8, 1, 50, 1);
+
+    console.log(map);
+  });
 });
