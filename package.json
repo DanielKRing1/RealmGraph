@@ -20,15 +20,14 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@asianpersonn/dict-utils": "^1.0.3",
-        "@asianpersonn/heap": "^1.0.2",
+        "@asianpersonn/dict-utils": "^1.0.5",
         "@asianpersonn/pagerank": "^1.0.7",
         "catalyst-graph": "^1.0.9",
-        "dynamic-realm": "^1.0.33",
-        "npm-run-all": "^4.1.5",
-        "realm": "^10.10.1"
+        "dynamic-realm": "^1.0.42",
+        "realm": "^10.13.0"
     },
     "devDependencies": {
+        "@asianpersonn/realm-mock": "^1.0.4",
         "@types/jest": "^27.0.3",
         "@typescript-eslint/eslint-plugin": "^5.7.0",
         "@typescript-eslint/parser": "^5.7.0",
@@ -36,6 +35,7 @@
         "eslint-config-airbnb-base": "^15.0.0",
         "eslint-plugin-import": "^2.25.3",
         "jest": "^27.4.4",
+        "npm-run-all": "^4.1.5",
         "prettier": "2.5.1",
         "ts-jest": "^27.1.1",
         "typescript": "^4.5.3"

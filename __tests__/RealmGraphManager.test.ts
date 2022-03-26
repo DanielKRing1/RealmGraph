@@ -1,10 +1,9 @@
-import DynamicRealm from 'dynamic-realm';
 import { RatingMode } from 'catalyst-graph';
-import RealmGraph, { RealmGraphManager } from '../src';
+import realmGraphManager, { RealmGraph } from '../src';
 import { Dict } from '../src/types/global';
 
 // @ts-ignore
-jest.mock('realm');
+jest.mock('realm', () => require('@asianpersonn/realm-mock'));
 
 const manager1GraphName1: string = 'Manager1TestGraph1';
 const manager1PropertyNames1: string[] = [ 'prop1', 'prop2' ];
@@ -25,48 +24,56 @@ const manager2PropertyNames2: string[] = [ 'prop9', 'prop10' ];
 const manager2GraphName3: string = 'Manager2TestGraph3';
 const manager2PropertyNames3: string[] = [ 'prop11', 'prop12' ];
 
-const testPath1: string = 'RealmGraphManager_Test1.path';
-const testPath2: string = 'RealmGraphManager_Test2.path';
-const realmGraphManager1: RealmGraphManager = new RealmGraphManager(testPath1);
-const realmGraphManager2: RealmGraphManager = new RealmGraphManager(testPath2);
+const TEST_META_REALM_PATH_1: string = 'TEST_META_REALM_PATH_1.path';
+const TEST_META_REALM_PATH_2: string = 'TEST_META_REALM_PATH_2.path';
+
+const TEST_LOADABLE_REALM_PATH: string = 'TEST_LOADABLE_REALM_PATH_1';
 
 // @ts-ignore
 describe('RealmGraphManager', () => {
   // @ts-ignore
   it('Should load all graphs in same realm', async () => {
-    await DynamicRealm.init();
-    await realmGraphManager1.init();
-    await realmGraphManager1.create({
+    await realmGraphManager.createGraph({
+      metaRealmPath: TEST_META_REALM_PATH_1,
+      loadableRealmPath: TEST_LOADABLE_REALM_PATH,
         graphName: manager1GraphName1,
         propertyNames: manager1PropertyNames1,
     });
-    await realmGraphManager1.create({
+    await realmGraphManager.createGraph({
+      metaRealmPath: TEST_META_REALM_PATH_1,
+      loadableRealmPath: TEST_LOADABLE_REALM_PATH,
         graphName: manager1GraphName2,
         propertyNames: manager1PropertyNames2,
     });
-    await realmGraphManager1.create({
+    await realmGraphManager.createGraph({
+      metaRealmPath: TEST_META_REALM_PATH_1,
+      loadableRealmPath: TEST_LOADABLE_REALM_PATH,
         graphName: manager1GraphName3,
         propertyNames: manager1PropertyNames3,
     });
 
-    await realmGraphManager2.init();
-    await realmGraphManager2.create({
+    await realmGraphManager.createGraph({
+      metaRealmPath: TEST_META_REALM_PATH_2,
+      loadableRealmPath: TEST_LOADABLE_REALM_PATH,
         graphName: manager2GraphName1,
         propertyNames: manager2PropertyNames1,
     });
-    await realmGraphManager2.create({
+    await realmGraphManager.createGraph({
+      metaRealmPath: TEST_META_REALM_PATH_2,
+      loadableRealmPath: TEST_LOADABLE_REALM_PATH,
         graphName: manager2GraphName2,
         propertyNames: manager2PropertyNames2,
     });
-    await realmGraphManager2.create({
+    await realmGraphManager.createGraph({
+      metaRealmPath: TEST_META_REALM_PATH_2,
+      loadableRealmPath: TEST_LOADABLE_REALM_PATH,
         graphName: manager2GraphName3,
         propertyNames: manager2PropertyNames3,
     });
   });
 
   it('Should give access to manager1graph1', async () => {
-    const graph: RealmGraph = realmGraphManager1.get(manager1GraphName1)!;
-    await graph.init();
+    const graph: RealmGraph = realmGraphManager.getGraph(manager1GraphName1)!;
 
     graph.rate('prop1', ['basketball', 'eat', 'run', 'sleep'], 9, [1, 1, 1, 1], RatingMode.Single);
     graph.rate('prop1', ['basketball', 'eat', 'run', 'sleep'], 9, [1, 1, 1, 1], RatingMode.Collective);
@@ -80,15 +87,17 @@ describe('RealmGraphManager', () => {
     graph.rate('prop1', ['basketball', 'sleep'], 7, [1, 1], RatingMode.Single);
     graph.rate('prop1', ['basketball', 'sleep'], 7, [1, 1], RatingMode.Collective);
 
-    console.log(realmGraphManager1);
-    console.log(realmGraphManager1.realmGraphCache[manager1GraphName1].catalystGraph);
-    console.log(realmGraphManager1.realmGraphCache[manager1GraphName1].realm);
+    // console.log(realmGraphManager);
+    // console.log(realmGraphManager.realmGraphCache[manager1GraphName1].catalystGraph);
+    // console.log(realmGraphManager.realmGraphCache[manager1GraphName1].realm);
 
     console.log(graph.getAllNodes());
   });
 
   it('Should give access to manager1graph1', () => {
-    const graph: RealmGraph = realmGraphManager1.get(manager1GraphName2)!;
+    const graph: RealmGraph = realmGraphManager.getGraph(manager1GraphName2)!;
+    console.log('heyo')
+    console.log(graph)
 
     graph.rate('prop4', ['basketball', 'eat', 'run', 'sleep'], 9, [1, 1, 1, 1], RatingMode.Single);
     graph.rate('prop4', ['basketball', 'eat', 'run', 'sleep'], 9, [1, 1, 1, 1], RatingMode.Collective);
@@ -104,12 +113,12 @@ describe('RealmGraphManager', () => {
 
     console.log(graph.getAllNodes());
 
-    const graph1: RealmGraph = realmGraphManager1.get(manager1GraphName1)!;
+    const graph1: RealmGraph = realmGraphManager.getGraph(manager1GraphName1)!;
     console.log(graph1.getAllNodes());
   });
 
   it('Should give access to manager1graph1', () => {
-    const graph: RealmGraph = realmGraphManager1.get(manager1GraphName3)!;
+    const graph: RealmGraph = realmGraphManager.getGraph(manager1GraphName3)!;
 
     graph.rate('prop5', ['basketball', 'eat', 'run', 'sleep'], 9, [1, 1, 1, 1], RatingMode.Single);
     graph.rate('prop5', ['basketball', 'eat', 'run', 'sleep'], 9, [1, 1, 1, 1], RatingMode.Collective);
@@ -125,7 +134,7 @@ describe('RealmGraphManager', () => {
   });
 
   it('Should give access to manager1graph1', () => {
-    const graph: RealmGraph = realmGraphManager2.get(manager2GraphName1)!;
+    const graph: RealmGraph = realmGraphManager.getGraph(manager2GraphName1)!;
 
     graph.rate('prop8', ['basketball', 'eat', 'run', 'sleep'], 9, [1, 1, 1, 1], RatingMode.Single);
     graph.rate('prop8', ['basketball', 'eat', 'run', 'sleep'], 9, [1, 1, 1, 1], RatingMode.Collective);
@@ -141,7 +150,7 @@ describe('RealmGraphManager', () => {
   });
 
   it('Should give access to manager1graph1', () => {
-    const graph: RealmGraph = realmGraphManager2.get(manager2GraphName2)!;
+    const graph: RealmGraph = realmGraphManager.getGraph(manager2GraphName2)!;
 
     graph.rate('prop9', ['basketball', 'eat', 'run', 'sleep'], 9, [1, 1, 1, 1], RatingMode.Single);
     graph.rate('prop9', ['basketball', 'eat', 'run', 'sleep'], 9, [1, 1, 1, 1], RatingMode.Collective);
@@ -157,7 +166,7 @@ describe('RealmGraphManager', () => {
   });
 
   it('Should give access to manager1graph1', () => {
-    const graph: RealmGraph = realmGraphManager2.get(manager2GraphName3)!;
+    const graph: RealmGraph = realmGraphManager.getGraph(manager2GraphName3)!;
 
     graph.rate('prop11', ['basketball', 'eat', 'run', 'sleep'], 9, [1, 1, 1, 1], RatingMode.Single);
     graph.rate('prop11', ['basketball', 'eat', 'run', 'sleep'], 9, [1, 1, 1, 1], RatingMode.Collective);
@@ -175,7 +184,7 @@ describe('RealmGraphManager', () => {
   // @ts-ignore
   it('Should have rated each graph separately', async () => {
     // RealmGraphManager 1
-    const graph11: RealmGraph = realmGraphManager1.get(manager1GraphName1)!;
+    const graph11: RealmGraph = realmGraphManager.getGraph(manager1GraphName1)!;
     const expectedPageRankResult11: Dict<Dict<number>> = {
         eat: {
           prop1_SINGLE_AVG: 0.24124809741248143,
@@ -205,7 +214,7 @@ describe('RealmGraphManager', () => {
     expect(graph11.pageRank(50, 1)).toEqual(expectedPageRankResult11);
     console.log(graph11.pageRank(50, 1));
 
-    const graph12: RealmGraph = realmGraphManager1.get(manager1GraphName2)!;
+    const graph12: RealmGraph = realmGraphManager.getGraph(manager1GraphName2)!;
     const expectedPageRankResult12: Dict<Dict<number>> = {
         eat: {
           prop4_SINGLE_AVG: 0.24124809741248143,
@@ -235,7 +244,7 @@ describe('RealmGraphManager', () => {
     expect(graph12.pageRank(50, 1)).toEqual(expectedPageRankResult12);
     console.log(graph12.pageRank(50, 1));
 
-    const graph13: RealmGraph = realmGraphManager1.get(manager1GraphName3)!;
+    const graph13: RealmGraph = realmGraphManager.getGraph(manager1GraphName3)!;
     const expectedPageRankResult13: Dict<Dict<number>> = {
         eat: {
           prop5_SINGLE_AVG: 0.24124809741248143,
@@ -266,7 +275,7 @@ describe('RealmGraphManager', () => {
     console.log(graph13.pageRank(50, 1));
 
     // RealmGraphManager 2
-    const graph21: RealmGraph = realmGraphManager2.get(manager2GraphName1)!;
+    const graph21: RealmGraph = realmGraphManager.getGraph(manager2GraphName1)!;
     const expectedPageRankResult21: Dict<Dict<number>> = {
         eat: {
           prop8_SINGLE_AVG: 0.24124809741248143,
@@ -296,7 +305,7 @@ describe('RealmGraphManager', () => {
     expect(graph21.pageRank(50, 1)).toEqual(expectedPageRankResult21);
     console.log(graph21.pageRank(50, 1));
 
-    const graph22: RealmGraph = realmGraphManager2.get(manager2GraphName2)!;
+    const graph22: RealmGraph = realmGraphManager.getGraph(manager2GraphName2)!;
     const expectedPageRankResult22: Dict<Dict<number>> = {
         eat: {
           prop9_SINGLE_AVG: 0.24124809741248143,
@@ -326,7 +335,7 @@ describe('RealmGraphManager', () => {
     expect(graph22.pageRank(50, 1)).toEqual(expectedPageRankResult22);
     console.log(graph22.pageRank(50, 1));
 
-    const graph23: RealmGraph = realmGraphManager2.get(manager2GraphName3)!;
+    const graph23: RealmGraph = realmGraphManager.getGraph(manager2GraphName3)!;
     const expectedPageRankResult23: Dict<Dict<number>> = {
         eat: {
           prop11_SINGLE_AVG: 0.24124809741248143,

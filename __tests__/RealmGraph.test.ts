@@ -1,25 +1,32 @@
-import Heap from '@asianpersonn/heap';
 import { genSingleAverageName, RatingMode } from 'catalyst-graph';
-import RealmGraph from '../src';
+import RealmGraphManager, { RealmGraph } from '../src';
 import { Dict } from '../src/types/global';
 import { RankedNode } from '../src/types/RealmGraph';
 
 // @ts-ignore
-jest.mock('realm');
+jest.mock('realm', () => require('@asianpersonn/realm-mock'));
 
 const graphName: string = 'TestGraph';
 
-const graph: RealmGraph = new RealmGraph({
-  graphName,
-  propertyNames: ['happy', 'sad', 'bored'],
-});
+const META_REALM_PATH: string = 'TEST_META_REALM_PATH.path';
+const LOADABLE_REALM_PATH: string = 'TEST_LOADABLE_REALM_PATH.path';
 
 // @ts-ignore
 describe('RealmGraph', () => {
+
+  let graph: RealmGraph;
+
+  beforeAll(async () => {
+    graph = await RealmGraphManager.createGraph({
+      metaRealmPath: META_REALM_PATH,
+      loadableRealmPath: LOADABLE_REALM_PATH,
+      graphName,
+      propertyNames: ['happy', 'sad', 'bored'],
+    });
+  });
+
   // @ts-ignore
   it('Should throw an error and have a null realm before being initialized', async () => {
-    await graph.init();
-
     graph.rate('happy', ['basketball', 'eat', 'run', 'sleep'], 9, [1, 1, 1, 1], RatingMode.Single);
     graph.rate('happy', ['basketball', 'eat', 'run', 'sleep'], 9, [1, 1, 1, 1], RatingMode.Collective);
 
@@ -46,6 +53,18 @@ describe('RealmGraph', () => {
 });
 
 describe('Page Rank', () => {
+
+  let graph: RealmGraph;
+
+  beforeAll(async () => {
+    graph = await RealmGraphManager.createGraph({
+      metaRealmPath: META_REALM_PATH,
+      loadableRealmPath: LOADABLE_REALM_PATH,
+      graphName,
+      propertyNames: ['happy', 'sad', 'bored'],
+    });
+  });
+
   it('Should be able to run PageRank', () => {
     const map: Dict<Dict<number>> = graph.pageRank(50);
 
@@ -60,13 +79,25 @@ describe('Page Rank', () => {
 
   it('Should be able to organize PageRank recommendations into a heap', () => {
     const desiredRankKey: string = genSingleAverageName('happy');
-    const heap: Heap<RankedNode> = graph.recommend(desiredRankKey, ['sleep'], 0.8, 50);
+    const sortedRecommendations: RankedNode[] = graph.recommend(desiredRankKey, ['sleep'], 0.8, 50);
 
-    console.log(heap._list);
+    console.log(sortedRecommendations);
   });
 });
 
 describe('Page Rank more complex graph', () => {
+
+  let graph: RealmGraph;
+
+  beforeAll(async () => {
+    graph = await RealmGraphManager.createGraph({
+      metaRealmPath: META_REALM_PATH,
+      loadableRealmPath: LOADABLE_REALM_PATH,
+      graphName,
+      propertyNames: ['happy', 'sad', 'bored'],
+    });
+  });
+
   it('Should be able to run PageRank', () => {
     graph.rate('happy', ['pingpong', 'eat', 'run', 'sleep'], 9, [1, 1, 1, 1], RatingMode.Single);
     graph.rate('happy', ['pingpong', 'eat', 'run', 'sleep'], 9, [1, 1, 1, 1], RatingMode.Collective);
@@ -120,9 +151,9 @@ describe('Page Rank more complex graph', () => {
 
   it('Should be able to organize PageRank recommendations into a heap', () => {
     const desiredRankKey: string = genSingleAverageName('happy');
-    const heap: Heap<RankedNode> = graph.recommend(desiredRankKey, ['sleep', 'study'], 0.8, 0.01, 50, 1);
+    const sortedRecommendations: RankedNode[] = graph.recommend(desiredRankKey, ['sleep', 'study'], 0.8, 0.01, 50, 1);
 
-    console.log(heap);
+    console.log(sortedRecommendations);
   });
 
   it('Should be able to run redistributed PageRank recommendations', () => {
