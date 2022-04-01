@@ -15,6 +15,8 @@ import { RGManagerCreate, RGManagerGetOrCreate, RGManagerRemove, RGManagerUpdate
 import { RankedNode, RGCreateParams, RGLoadableParams } from './types/RealmGraph';
 import { genInitError, genNoGraphError } from './errors/RealmGraphManager';
 
+export { RatingMode };
+
 export type RealmGraph = {
     isInitialized: () => boolean;
     
