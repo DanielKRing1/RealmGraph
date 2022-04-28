@@ -27,17 +27,17 @@ describe('RealmGraph', () => {
 
   // @ts-ignore
   it('Should throw an error and have a null realm before being initialized', async () => {
-    graph.rate('happy', ['basketball', 'eat', 'run', 'sleep'], 9, [1, 1, 1, 1], RatingMode.Single);
-    graph.rate('happy', ['basketball', 'eat', 'run', 'sleep'], 9, [1, 1, 1, 1], RatingMode.Collective);
+    graph.rate('happy', ['basketball', 'eat', 'run', 'sleep'], 9, [0.25, 0.25, 0.25, 0.25], RatingMode.Single);
+    graph.rate('happy', ['basketball', 'eat', 'run', 'sleep'], 9, [0.25, 0.25, 0.25, 0.25], RatingMode.Collective);
 
-    graph.rate('happy', ['basketball', 'eat', 'sleep'], 7.5, [1, 1, 1], RatingMode.Single);
-    graph.rate('happy', ['basketball', 'eat', 'sleep'], 7.5, [1, 1, 1], RatingMode.Collective);
+    graph.rate('happy', ['basketball', 'eat', 'sleep'], 7.5, [0.333, 0.333, 0.333], RatingMode.Single);
+    graph.rate('happy', ['basketball', 'eat', 'sleep'], 7.5, [0.333, 0.333, 0.333], RatingMode.Collective);
 
-    graph.rate('happy', ['eat', 'run', 'sleep'], 5, [1, 1, 1], RatingMode.Single);
-    graph.rate('happy', ['eat', 'run', 'sleep'], 5, [1, 1, 1], RatingMode.Collective);
+    graph.rate('happy', ['eat', 'run', 'sleep'], 5, [0.333, 0.333, 0.333], RatingMode.Single);
+    graph.rate('happy', ['eat', 'run', 'sleep'], 5, [0.333, 0.333, 0.333], RatingMode.Collective);
 
-    graph.rate('happy', ['basketball', 'sleep'], 7, [1, 1], RatingMode.Single);
-    graph.rate('happy', ['basketball', 'sleep'], 7, [1, 1], RatingMode.Collective);
+    graph.rate('happy', ['basketball', 'sleep'], 7, [0.5, 0.5], RatingMode.Single);
+    graph.rate('happy', ['basketball', 'sleep'], 7, [0.5, 0.5], RatingMode.Collective);
 
     const map: Dict<Dict<number>> = graph.pageRank(50, 1);
     console.log(map);
@@ -99,44 +99,44 @@ describe('Page Rank more complex graph', () => {
   });
 
   it('Should be able to run PageRank', () => {
-    graph.rate('happy', ['pingpong', 'eat', 'run', 'sleep'], 9, [1, 1, 1, 1], RatingMode.Single);
-    graph.rate('happy', ['pingpong', 'eat', 'run', 'sleep'], 9, [1, 1, 1, 1], RatingMode.Collective);
+    graph.rate('happy', ['pingpong', 'eat', 'run', 'sleep'], 9, [0.25, 0.25, 0.25, 0.25], RatingMode.Single);
+    graph.rate('happy', ['pingpong', 'eat', 'run', 'sleep'], 9, [0.25, 0.25, 0.25, 0.25], RatingMode.Collective);
 
-    graph.rate('happy', ['pingpong', 'eat', 'sleep'], 7.5, [1, 1, 1], RatingMode.Single);
-    graph.rate('happy', ['pingpong', 'eat', 'sleep'], 7.5, [1, 1, 1], RatingMode.Collective);
+    graph.rate('happy', ['pingpong', 'eat', 'sleep'], 7.5, [0.333, 0.333, 0.333], RatingMode.Single);
+    graph.rate('happy', ['pingpong', 'eat', 'sleep'], 7.5, [0.333, 0.333, 0.333], RatingMode.Collective);
 
-    graph.rate('happy', ['eat', 'run'], 3, [1, 1], RatingMode.Single);
-    graph.rate('happy', ['eat', 'run'], 3, [1, 1], RatingMode.Collective);
+    graph.rate('happy', ['eat', 'run'], 3, [0.5, 0.5], RatingMode.Single);
+    graph.rate('happy', ['eat', 'run'], 3, [0.5, 0.5], RatingMode.Collective);
 
-    graph.rate('happy', ['basketball', 'pingpong', 'sleep'], 6, [1, 1, 1], RatingMode.Single);
-    graph.rate('happy', ['basketball', 'pingpong', 'sleep'], 6, [1, 1, 1], RatingMode.Collective);
+    graph.rate('happy', ['basketball', 'pingpong', 'sleep'], 6, [0.333, 0.333, 0.333], RatingMode.Single);
+    graph.rate('happy', ['basketball', 'pingpong', 'sleep'], 6, [0.333, 0.333, 0.333], RatingMode.Collective);
 
-    graph.rate('happy', ['basketball', 'eat', 'sleep'], 8, [1, 1, 1], RatingMode.Single);
-    graph.rate('happy', ['basketball', 'eat', 'sleep'], 8, [1, 1, 1], RatingMode.Collective);
+    graph.rate('happy', ['basketball', 'eat', 'sleep'], 8, [0.333, 0.333, 0.333], RatingMode.Single);
+    graph.rate('happy', ['basketball', 'eat', 'sleep'], 8, [0.333, 0.333, 0.333], RatingMode.Collective);
 
-    graph.rate('happy', ['study', 'sleep'], 6, [1, 1], RatingMode.Single);
-    graph.rate('happy', ['study', 'sleep'], 6, [1, 1], RatingMode.Collective);
+    graph.rate('happy', ['study', 'sleep'], 6, [0.5, 0.5], RatingMode.Single);
+    graph.rate('happy', ['study', 'sleep'], 6, [0.5, 0.5], RatingMode.Collective);
 
-    graph.rate('happy', ['study', 'walk', 'eat', 'sleep'], 7.5, [1, 1, 1, 1], RatingMode.Single);
-    graph.rate('happy', ['study', 'walk', 'eat', 'sleep'], 7.5, [1, 1, 1, 1], RatingMode.Collective);
+    graph.rate('happy', ['study', 'walk', 'eat', 'sleep'], 7.5, [0.25, 0.25, 0.25, 0.25], RatingMode.Single);
+    graph.rate('happy', ['study', 'walk', 'eat', 'sleep'], 7.5, [0.25, 0.25, 0.25, 0.25], RatingMode.Collective);
 
-    graph.rate('happy', ['study', 'walk', 'sleep'], 4, [1, 1, 1], RatingMode.Single);
-    graph.rate('happy', ['study', 'walk', 'sleep'], 4, [1, 1, 1], RatingMode.Collective);
+    graph.rate('happy', ['study', 'walk', 'sleep'], 4, [0.333, 0.333, 0.333], RatingMode.Single);
+    graph.rate('happy', ['study', 'walk', 'sleep'], 4, [0.333, 0.333, 0.333], RatingMode.Collective);
 
-    graph.rate('happy', ['study', 'basketball', 'run', 'eat'], 2, [1, 1, 1, 1], RatingMode.Single);
-    graph.rate('happy', ['study', 'basketball', 'run', 'eat'], 2, [1, 1, 1, 1], RatingMode.Collective);
+    graph.rate('happy', ['study', 'basketball', 'run', 'eat'], 2, [0.25, 0.25, 0.25, 0.25], RatingMode.Single);
+    graph.rate('happy', ['study', 'basketball', 'run', 'eat'], 2, [0.25, 0.25, 0.25, 0.25], RatingMode.Collective);
 
-    graph.rate('happy', ['study', 'run', 'eat'], 3, [1, 1, 1], RatingMode.Single);
-    graph.rate('happy', ['study', 'run', 'eat'], 3, [1, 1, 1], RatingMode.Collective);
+    graph.rate('happy', ['study', 'run', 'eat'], 3, [0.333, 0.333, 0.333], RatingMode.Single);
+    graph.rate('happy', ['study', 'run', 'eat'], 3, [0.333, 0.333, 0.333], RatingMode.Collective);
 
-    graph.rate('happy', ['study', 'basketball', 'run', 'eat', 'sleep'], 9, [1, 1, 1, 1, 1], RatingMode.Single);
-    graph.rate('happy', ['study', 'basketball', 'run', 'eat', 'sleep'], 9, [1, 1, 1, 1, 1], RatingMode.Collective);
+    graph.rate('happy', ['study', 'basketball', 'run', 'eat', 'sleep'], 9, [0.2, 0.2, 0.2, 0.2, 0.2], RatingMode.Single);
+    graph.rate('happy', ['study', 'basketball', 'run', 'eat', 'sleep'], 9, [0.2, 0.2, 0.2, 0.2, 0.2], RatingMode.Collective);
 
-    graph.rate('happy', ['meditate', 'basketball', 'run', 'sleep'], 6, [1, 1, 1, 1], RatingMode.Single);
-    graph.rate('happy', ['meditate', 'basketball', 'run', 'sleep'], 6, [1, 1, 1, 1], RatingMode.Collective);
+    graph.rate('happy', ['meditate', 'basketball', 'run', 'sleep'], 6, [0.25, 0.25, 0.25, 0.25], RatingMode.Single);
+    graph.rate('happy', ['meditate', 'basketball', 'run', 'sleep'], 6, [0.25, 0.25, 0.25, 0.25], RatingMode.Collective);
 
-    graph.rate('happy', ['meditate', 'eat', 'sleep'], 9, [1, 1, 1], RatingMode.Single);
-    graph.rate('happy', ['meditate', 'eat', 'sleep'], 9, [1, 1, 1], RatingMode.Collective);
+    graph.rate('happy', ['meditate', 'eat', 'sleep'], 9, [0.333, 0.333, 0.333], RatingMode.Single);
+    graph.rate('happy', ['meditate', 'eat', 'sleep'], 9, [0.333, 0.333, 0.333], RatingMode.Collective);
 
     const map: Dict<Dict<number>> = graph.pageRank(50, 1);
 

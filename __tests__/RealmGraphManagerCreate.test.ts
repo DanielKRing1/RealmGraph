@@ -40,8 +40,8 @@ describe('RealmGraphManager', () => {
         propertyNames: manager1PropertyNames1,
     });
     let graph11 = realmGraphManager.getGraph(manager1GraphName1);
-    console.log(graph11);
-    console.log(graph11.getRealm());
+    // console.log(graph11);
+    // console.log(graph11.getRealm());
 
     await realmGraphManager.createGraph({
       metaRealmPath: TEST_META_REALM_PATH_1,
@@ -50,8 +50,8 @@ describe('RealmGraphManager', () => {
         propertyNames: manager1PropertyNames2,
     });
     let graph12 = realmGraphManager.getGraph(manager1GraphName2);
-    console.log(graph12);
-    console.log(graph12.getRealm());
+    // console.log(graph12);
+    // console.log(graph12.getRealm());
 
     await realmGraphManager.createGraph({
       metaRealmPath: TEST_META_REALM_PATH_1,

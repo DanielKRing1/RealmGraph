@@ -262,8 +262,8 @@ async function createRealmGraph(args: RGCreateParams): Promise<RealmGraph> {
     function pageRank(iterations: number = 50, dampingFactor: number = 0.85): Dict<Dict<number>> {
         _throwInitError('pageRank');
 
-        console.log(getRealm().objects(_getNodeSchemaName()));
-        console.log(getRealm().objects(_getEdgeSchemaName()));
+        // console.log(getRealm().objects(_getNodeSchemaName()));
+        // console.log(getRealm().objects(_getEdgeSchemaName()));
 
         // 1. Get node methods
         const { allNodes, getNodeId, getNodeAttrs } = _getPageRankNodeMethods();

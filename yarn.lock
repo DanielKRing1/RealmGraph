@@ -1170,10 +1170,12 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
-catalyst-graph@^1.0.9:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/catalyst-graph/-/catalyst-graph-1.0.9.tgz#dc43a5b0df5659c696d120f75d5d301145a44dd9"
-  integrity sha512-fV3KFC0fzO9bYck8aYGcu1rBo9ZwcAD5NIuIjnUTGL7ROCwU1bTT8r4tuKXCmHPg3OCm6bJ2imzH8uhQEFIKLQ==
+catalyst-graph@^1.0.17:
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/catalyst-graph/-/catalyst-graph-1.0.17.tgz#503a01f6f9ae1254f838d8a5132562b15085f350"
+  integrity sha512-bdZ+SIRuGzmNoFt8bzcuO4tRJup06btUsWcppbHkD3+OV3g8JrDiSGEd79sJLZWvztq36Z4IFn63AP6paia9Aw==
+  dependencies:
+    typescript "^4.6.3"
 
 chalk@^2.0.0, chalk@^2.4.1:
   version "2.4.2"
@@ -4421,6 +4423,11 @@ typescript@^4.5.3:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.2.tgz#fe12d2727b708f4eef40f51598b3398baa9611d4"
   integrity sha512-HM/hFigTBHZhLXshn9sN37H085+hQGeJHJ/X7LpBWLID/fbc2acUMfU+lGD98X81sKP+pFa9f0DZmCwB9GnbAg==
+
+typescript@^4.6.3:
+  version "4.6.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.3.tgz#eefeafa6afdd31d725584c67a0eaba80f6fc6c6c"
+  integrity sha512-yNIatDa5iaofVozS/uQJEl3JRWLKKGJKh6Yaiv0GLGSuhpFJe7P3SbHZ8/yjAHRQwKRoA6YZqlfjXWmVzoVSMw==
 
 typical@^4.0.0:
   version "4.0.0"
