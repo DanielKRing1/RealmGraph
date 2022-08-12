@@ -630,10 +630,10 @@ function getGraphManager(): RealmGraphManager {
     function getAllLoadedGraphs(): RealmGraph[] { return Object.values(graphMap); }
 
     async function loadGraphs(metaRealmPath: string, loadableRealmPath: string): Promise<RealmGraph[]> {
-        _throwInitError(metaRealmPath, 'loadRealm');
-
         // 1. Get realm that this RealmGraphManager will use for this set of RealmGraphs
         let realm: Realm = await _getOrCreateRealm(metaRealmPath, loadableRealmPath) as Realm;
+        
+        _throwInitError(metaRealmPath, 'loadRealm');
 
         console.log('LOADED REALM');
         console.log(realm);
