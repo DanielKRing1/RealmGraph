@@ -1529,10 +1529,10 @@
   dependencies:
     "webidl-conversions" "^5.0.0"
 
-"dynamic-realm@^1.0.43":
-  "integrity" "sha512-AUfFbae6SmfUtIYe0VdxyEmFNy3f/7gPVXKquNixAAPKIjdv8gemivdNHWdjbZvjCdCujyeACLmLHXEJKT+1Ng=="
-  "resolved" "https://registry.npmjs.org/dynamic-realm/-/dynamic-realm-1.0.43.tgz"
-  "version" "1.0.43"
+"dynamic-realm@^1.0.44":
+  "integrity" "sha512-U58kiOYSB4CfGLlWg/JIFvS65ujrC/gO2FytPK6suLM1MiAHWamH/fNpZikTGHyPulCZmnYxoAJyDzXyv8V0bw=="
+  "resolved" "https://registry.npmjs.org/dynamic-realm/-/dynamic-realm-1.0.44.tgz"
+  "version" "1.0.44"
   dependencies:
     "realm" "^10.13.0"
 
