@@ -15,14 +15,15 @@ export type RGLoadableParams = {
     graphName: string;
 };
 
+export type RGDeletePropertiesParams = {
+    reloadRealm: () => Promise<Realm>;
+} & RGLoadGraphParams;
+
 export type RGUpdatePropertiesParams = {
-    metaRealmPath: string;
-    loadableRealmPath: string;
-    graphName: string;
     newPropertyNames: string[];
 
     reloadRealm: () => Promise<Realm>;
-};
+} & RGLoadGraphParams;
 
 export type RankedNode = { id: string; } & Dict<any>;
 

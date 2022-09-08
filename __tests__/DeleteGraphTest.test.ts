@@ -78,7 +78,7 @@ describe('createRealmGraph', () => {
         expect(loadedSchemaNames1.sort()).toEqual([ nodeSchemaName1, edgeSchemaName1, nodeSchemaName2, edgeSchemaName2 ].sort());
 
         // DELETE GRAPH1
-        loadedRealmGraph.deleteGraph();
+        await loadedRealmGraph.deleteGraph();
 
         schemaNames1 = MetaRealm.getSchemaNames(META_REALM_PATH1, LOADABLE_REALM_PATH1);
         expect(schemaNames1.sort()).toEqual([ nodeSchemaName2, edgeSchemaName2 ].sort());

@@ -8,7 +8,7 @@ import { genEdgeName, genEdgeSchemaName, genNodeSchemaName, getGraphPropertyName
 import { genBaseSchema } from '../constants/schemas';
 
 import { Dict } from '../types';
-import { RankedNode, RealmGraph, RGCreateParams, RGLoadableParams, RGLoadGraphParams, RGUpdatePropertiesParams } from "./types";
+import { RankedNode, RealmGraph, RGCreateParams, RGDeletePropertiesParams, RGLoadableParams, RGLoadGraphParams, RGUpdatePropertiesParams } from "./types";
 
 /**
  * Saves RealmGraph Node and Edge schemas to LoadableSchema table
@@ -80,6 +80,13 @@ const initializeRealmGraph = async ({ metaRealmPath, loadableRealmPath, graphNam
 
     const getGraphEntity = (ids: string[], entityType: GraphEntity): CGNode | CGEdge => {
         return _catalystGraph.getGraphEntity(ids, entityType);
+    }
+
+    const deleteGraph = async () => await _deleteGraphSchemas({ metaRealmPath, loadableRealmPath, graphName, reloadRealm });
+
+    const updateGraphProperties = async (newPropertyNames: string[]) => {
+        await _updateGraphProperties({ metaRealmPath, loadableRealmPath, graphName, newPropertyNames, reloadRealm })
+        _catalystGraph.propertyNames = newPropertyNames;
     }
 
     const rate = (propertyName: string, nodeIds: string[], rating: number, weights: number[], ratingMode: RatingMode): RateReturn => {
@@ -260,11 +267,8 @@ const initializeRealmGraph = async ({ metaRealmPath, loadableRealmPath, graphNam
         reloadRealm,
         reloadRealmSync,
 
-        deleteGraph: () => _deleteGraphSchemas(metaRealmPath, loadableRealmPath, graphName),
-        updateGraphProperties: async (newPropertyNames: string[]) => {
-            await _updateGraphProperties({ metaRealmPath, loadableRealmPath, graphName, newPropertyNames, reloadRealm })
-            _catalystGraph.propertyNames = newPropertyNames;
-        },
+        deleteGraph,
+        updateGraphProperties,
 
         getAllNodes,
         getAllEdges,
@@ -306,7 +310,7 @@ const _saveGraphSchemas = (metaRealmPath, loadableRealmPath, graphName: string, 
     }
 }
 
-const _deleteGraphSchemas = (metaRealmPath, loadableRealmPath, graphName: string): void => {
+const _deleteGraphSchemas = async ({ metaRealmPath, loadableRealmPath, graphName, reloadRealm }: RGDeletePropertiesParams): Promise<void> => {
     // 1. Get node + edge schema names
     const schemaNames: string[] = [ genNodeSchemaName(graphName), genEdgeSchemaName(graphName) ];
 
@@ -314,6 +318,9 @@ const _deleteGraphSchemas = (metaRealmPath, loadableRealmPath, graphName: string
     for(let schemaName of schemaNames) {
         MetaRealm.rmSchema({ metaRealmPath, loadableRealmPath, schemaName });
     }
+
+    // 3. Reload Realm with updated schemas
+    await reloadRealm();
 }
 
 async function _updateGraphProperties({ metaRealmPath, loadableRealmPath, graphName, newPropertyNames, reloadRealm }: RGUpdatePropertiesParams): Promise<void> {

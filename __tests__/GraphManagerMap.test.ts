@@ -104,7 +104,7 @@ describe('createRealmGraph', () => {
 
     
     it('Should remove Graph1', async () => {
-        GraphManager.rmGraph(GRAPH_NAME1);
+        await GraphManager.rmGraph(GRAPH_NAME1);
 
         expect(GraphManager.getAllLoadedGraphNames().sort()).toEqual([ GRAPH_NAME2, GRAPH_NAME3, GRAPH_NAME4 ].sort());
         expect(GraphManager.getLoadableGraphNames(META_REALM_PATH1, LOADABLE_REALM_PATH1).sort()).toEqual([ GRAPH_NAME2 ].sort());
@@ -113,7 +113,7 @@ describe('createRealmGraph', () => {
     });
 
     it('Should remove Graph2', async () => {
-        GraphManager.rmGraph(GRAPH_NAME2);
+        await GraphManager.rmGraph(GRAPH_NAME2);
 
         expect(GraphManager.getAllLoadedGraphNames().sort()).toEqual([ GRAPH_NAME3, GRAPH_NAME4 ].sort());
         expect(GraphManager.getLoadableGraphNames(META_REALM_PATH1, LOADABLE_REALM_PATH1).sort()).toEqual([].sort());
@@ -122,7 +122,7 @@ describe('createRealmGraph', () => {
     });
 
     it('Should remove Graph3', async () => {
-        GraphManager.rmGraph(GRAPH_NAME3);
+        await GraphManager.rmGraph(GRAPH_NAME3);
 
         expect(GraphManager.getAllLoadedGraphNames().sort()).toEqual([ GRAPH_NAME4 ].sort());
         expect(GraphManager.getLoadableGraphNames(META_REALM_PATH1, LOADABLE_REALM_PATH1).sort()).toEqual([].sort());
@@ -131,7 +131,7 @@ describe('createRealmGraph', () => {
     });
 
     it('Should remove Graph4', async () => {
-        GraphManager.rmGraph(GRAPH_NAME4);
+        await GraphManager.rmGraph(GRAPH_NAME4);
 
         expect(GraphManager.getAllLoadedGraphNames().sort()).toEqual([].sort());
         expect(GraphManager.getLoadableGraphNames(META_REALM_PATH1, LOADABLE_REALM_PATH1).sort()).toEqual([].sort());

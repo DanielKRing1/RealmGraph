@@ -36,11 +36,11 @@ const createGraphManager = (): RealmGraphManager => {
         return realmGraphMap[graphName];
     }
 
-    const rmGraph = async (graphName: string) => {
+    const rmGraph = async (graphName: string): Promise<void> => {
         // 1. Try to delete RealmGraph schemas
         if(hasRealmGraph(graphName)) {
             const realmGraph: RealmGraph = realmGraphMap[graphName];
-            realmGraph.deleteGraph();
+            await realmGraph.deleteGraph();
         }
 
         // 2. Remove RealmGraph from map if present
