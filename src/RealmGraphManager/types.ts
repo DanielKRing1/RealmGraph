@@ -1,3 +1,5 @@
+import Realm from 'realm';
+
 export type RGManagerCreate = {
     metaRealmPath: string;
     loadableRealmPath: string;
@@ -11,13 +13,6 @@ export type RGManagerGetOrCreate = {
     metaRealmPath: string;
     loadableRealmPath: string;
     propertyNames: string[];
-};
-
-export type RGManagerUpdate = {
-    metaRealmPath: string;
-    loadableRealmPath: string;
-    graphName: string;
-    newProperties: string[];
 };
 
 export type RGManagerRemove = {

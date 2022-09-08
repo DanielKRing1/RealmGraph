@@ -1,3 +1,5 @@
+import { PROPERTY_DELIM as CG_PROPERTY_DELIMITER } from "catalyst-graph";
+
 const NODE_SCHEMA_SUFFIX: string = 'NODE';
 const EDGE_SCHEMA_SUFFIX: string = 'EDGE';
 export const SUFFIX_DELIMITER: string = '_';
@@ -6,6 +8,13 @@ export const genEdgeSchemaName = (graphName: string): string => `${graphName}${S
 export const getBaseNameFromSchemaName = (schemaName: string) => {
     const index: number = schemaName.lastIndexOf(SUFFIX_DELIMITER);
     const baseName: string = schemaName.slice(0, index);
+
+    return baseName;
+};
+
+export const getGraphPropertyNameFromKey = (rawPropertyName: string) => {
+    const index: number = rawPropertyName.lastIndexOf(CG_PROPERTY_DELIMITER);
+    const baseName: string = rawPropertyName.slice(0, index);
 
     return baseName;
 };

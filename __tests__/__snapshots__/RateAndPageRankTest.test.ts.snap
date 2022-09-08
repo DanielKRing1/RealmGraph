@@ -1,0 +1,1281 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 1`] = `
+Array [
+  Object {
+    "COLLECTIVE_TALLY": 1.7489999532699585,
+    "edgeIds": Array [
+      "basketball-eat",
+      "basketball-run",
+      "basketball-sleep",
+      "basketball-skate",
+    ],
+    "id": "basketball",
+    "prop1-COLLECTIVE_AVG": 7.571469783782959,
+    "prop1-SINGLE_AVG": 7.571469783782959,
+    "prop1-SINGLE_TALLY": 1.7489999532699585,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+    "prop2-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 1.4259999990463257,
+    "edgeIds": Array [
+      "basketball-eat",
+      "eat-run",
+      "eat-sleep",
+      "eat-skate",
+    ],
+    "id": "eat",
+    "prop1-COLLECTIVE_AVG": 5.913390159606934,
+    "prop1-SINGLE_AVG": 5.913390159606934,
+    "prop1-SINGLE_TALLY": 1.4259999990463257,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+    "prop2-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.5929999947547913,
+    "edgeIds": Array [
+      "basketball-run",
+      "eat-run",
+      "run-sleep",
+      "run-skate",
+    ],
+    "id": "run",
+    "prop1-COLLECTIVE_AVG": 6.635749816894531,
+    "prop1-SINGLE_AVG": 6.635749816894531,
+    "prop1-SINGLE_TALLY": 0.5929999947547913,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+    "prop2-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 2.5920000076293945,
+    "edgeIds": Array [
+      "basketball-sleep",
+      "eat-sleep",
+      "run-sleep",
+      "skate-sleep",
+    ],
+    "id": "sleep",
+    "prop1-COLLECTIVE_AVG": 6.530670166015625,
+    "prop1-SINGLE_AVG": 6.530670166015625,
+    "prop1-SINGLE_TALLY": 2.5920000076293945,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+    "prop2-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.6759999990463257,
+    "edgeIds": Array [
+      "basketball-skate",
+      "skate-sleep",
+      "eat-skate",
+      "run-skate",
+    ],
+    "id": "skate",
+    "prop1-COLLECTIVE_AVG": 7.41864013671875,
+    "prop1-SINGLE_AVG": 7.41864013671875,
+    "prop1-SINGLE_TALLY": 0.6759999990463257,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+    "prop2-SINGLE_TALLY": 0,
+  },
+]
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 2`] = `
+Array [
+  Object {
+    "COLLECTIVE_TALLY": 0.49966999888420105,
+    "id": "basketball-eat",
+    "nodeId1": "basketball",
+    "nodeId2": "eat",
+    "prop1-COLLECTIVE_AVG": 8.000280380249023,
+    "prop1-SINGLE_AVG": 8.000340461730957,
+    "prop1-SINGLE_TALLY": 0.49966999888420105,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+    "prop2-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.16666999459266663,
+    "id": "basketball-run",
+    "nodeId1": "basketball",
+    "nodeId2": "run",
+    "prop1-COLLECTIVE_AVG": 8.9998197555542,
+    "prop1-SINGLE_AVG": 9,
+    "prop1-SINGLE_TALLY": 0.16666999459266663,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+    "prop2-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 2.1656699180603027,
+    "id": "basketball-sleep",
+    "nodeId1": "basketball",
+    "nodeId2": "sleep",
+    "prop1-COLLECTIVE_AVG": 7.384550094604492,
+    "prop1-SINGLE_AVG": 7.3845601081848145,
+    "prop1-SINGLE_TALLY": 2.1656699180603027,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+    "prop2-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.5063400268554688,
+    "id": "eat-run",
+    "nodeId1": "eat",
+    "nodeId2": "run",
+    "prop1-COLLECTIVE_AVG": 6.277070045471191,
+    "prop1-SINGLE_AVG": 6.277170181274414,
+    "prop1-SINGLE_TALLY": 0.5063400268554688,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+    "prop2-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 1.8393399715423584,
+    "id": "eat-sleep",
+    "nodeId1": "eat",
+    "nodeId2": "sleep",
+    "prop1-COLLECTIVE_AVG": 5.2604899406433105,
+    "prop1-SINGLE_AVG": 5.260519981384277,
+    "prop1-SINGLE_TALLY": 1.8393399715423584,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+    "prop2-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.5063400268554688,
+    "id": "run-sleep",
+    "nodeId1": "run",
+    "nodeId2": "sleep",
+    "prop1-COLLECTIVE_AVG": 6.277070045471191,
+    "prop1-SINGLE_AVG": 6.277170181274414,
+    "prop1-SINGLE_TALLY": 0.5063400268554688,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+    "prop2-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.6660000085830688,
+    "id": "basketball-skate",
+    "nodeId1": "basketball",
+    "nodeId2": "skate",
+    "prop1-COLLECTIVE_AVG": 7.5,
+    "prop1-SINGLE_AVG": 7.5,
+    "prop1-SINGLE_TALLY": 0.6660000085830688,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+    "prop2-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.6726700067520142,
+    "id": "skate-sleep",
+    "nodeId1": "sleep",
+    "nodeId2": "skate",
+    "prop1-COLLECTIVE_AVG": 7.4454498291015625,
+    "prop1-SINGLE_AVG": 7.445489883422852,
+    "prop1-SINGLE_TALLY": 0.6726700067520142,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+    "prop2-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.006670000031590462,
+    "id": "eat-skate",
+    "nodeId1": "eat",
+    "nodeId2": "skate",
+    "prop1-COLLECTIVE_AVG": 1.9989999532699585,
+    "prop1-SINGLE_AVG": 2,
+    "prop1-SINGLE_TALLY": 0.006670000031590462,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+    "prop2-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.006670000031590462,
+    "id": "run-skate",
+    "nodeId1": "run",
+    "nodeId2": "skate",
+    "prop1-COLLECTIVE_AVG": 1.9989999532699585,
+    "prop1-SINGLE_AVG": 2,
+    "prop1-SINGLE_TALLY": 0.006670000031590462,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+    "prop2-SINGLE_TALLY": 0,
+  },
+]
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 3`] = `
+Object {
+  "basketball": Object {
+    "prop1-COLLECTIVE_AVG": 0.252094483913905,
+    "prop1-SINGLE_AVG": 0.25208994454963213,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+  },
+  "eat": Object {
+    "prop1-COLLECTIVE_AVG": 0.179265790882551,
+    "prop1-SINGLE_AVG": 0.17926649928468585,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+  },
+  "run": Object {
+    "prop1-COLLECTIVE_AVG": 0.19766433630088498,
+    "prop1-SINGLE_AVG": 0.19766548744300755,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+  },
+  "skate": Object {
+    "prop1-COLLECTIVE_AVG": 0.1620221369288362,
+    "prop1-SINGLE_AVG": 0.16202920688745437,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+  },
+  "sleep": Object {
+    "prop1-COLLECTIVE_AVG": 0.20895325197382275,
+    "prop1-SINGLE_AVG": 0.2089488618352202,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+  },
+}
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 4`] = `
+Object {
+  "basketball": Object {
+    "prop1-COLLECTIVE_AVG": 0.26073950436659465,
+    "prop1-SINGLE_AVG": 0.26073080209966604,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+  },
+  "eat": Object {
+    "prop1-COLLECTIVE_AVG": 0.17611938754179396,
+    "prop1-SINGLE_AVG": 0.17612186018992243,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+  },
+  "run": Object {
+    "prop1-COLLECTIVE_AVG": 0.19260638019170542,
+    "prop1-SINGLE_AVG": 0.19260972892762945,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+  },
+  "skate": Object {
+    "prop1-COLLECTIVE_AVG": 0.15491171016058838,
+    "prop1-SINGLE_AVG": 0.15492200650412744,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+  },
+  "sleep": Object {
+    "prop1-COLLECTIVE_AVG": 0.21562301773931647,
+    "prop1-SINGLE_AVG": 0.21561560227865562,
+    "prop2-COLLECTIVE_AVG": 0,
+    "prop2-SINGLE_AVG": 0,
+  },
+}
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 5`] = `
+Array [
+  Object {
+    "COLLECTIVE_TALLY": 1.0829999446868896,
+    "edgeIds": Array [
+      "basketball-eat",
+      "basketball-run",
+      "basketball-sleep",
+    ],
+    "id": "basketball",
+    "prop3-COLLECTIVE_AVG": 0,
+    "prop3-SINGLE_AVG": 0,
+    "prop3-SINGLE_TALLY": 0,
+    "prop4-COLLECTIVE_AVG": 7.615419864654541,
+    "prop4-SINGLE_AVG": 7.615419864654541,
+    "prop4-SINGLE_TALLY": 1.0829999446868896,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.9160000085830688,
+    "edgeIds": Array [
+      "basketball-eat",
+      "eat-run",
+      "eat-sleep",
+    ],
+    "id": "eat",
+    "prop3-COLLECTIVE_AVG": 0,
+    "prop3-SINGLE_AVG": 0,
+    "prop3-SINGLE_TALLY": 0,
+    "prop4-COLLECTIVE_AVG": 7.000539779663086,
+    "prop4-SINGLE_AVG": 7.000539779663086,
+    "prop4-SINGLE_TALLY": 0.9160000085830688,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.5830000042915344,
+    "edgeIds": Array [
+      "basketball-run",
+      "eat-run",
+      "run-sleep",
+    ],
+    "id": "run",
+    "prop3-COLLECTIVE_AVG": 0,
+    "prop3-SINGLE_AVG": 0,
+    "prop3-SINGLE_TALLY": 0,
+    "prop4-COLLECTIVE_AVG": 6.715270042419434,
+    "prop4-SINGLE_AVG": 6.715270042419434,
+    "prop4-SINGLE_TALLY": 0.5830000042915344,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 1.4160000085830688,
+    "edgeIds": Array [
+      "basketball-sleep",
+      "eat-sleep",
+      "run-sleep",
+    ],
+    "id": "sleep",
+    "prop3-COLLECTIVE_AVG": 0,
+    "prop3-SINGLE_AVG": 0,
+    "prop3-SINGLE_TALLY": 0,
+    "prop4-COLLECTIVE_AVG": 7.000349998474121,
+    "prop4-SINGLE_AVG": 7.000349998474121,
+    "prop4-SINGLE_TALLY": 1.4160000085830688,
+  },
+]
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 6`] = `
+Array [
+  Object {
+    "COLLECTIVE_TALLY": 0.49966999888420105,
+    "id": "basketball-eat",
+    "nodeId1": "basketball",
+    "nodeId2": "eat",
+    "prop3-COLLECTIVE_AVG": 0,
+    "prop3-SINGLE_AVG": 0,
+    "prop3-SINGLE_TALLY": 0,
+    "prop4-COLLECTIVE_AVG": 8.000280380249023,
+    "prop4-SINGLE_AVG": 8.000340461730957,
+    "prop4-SINGLE_TALLY": 0.49966999888420105,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.16666999459266663,
+    "id": "basketball-run",
+    "nodeId1": "basketball",
+    "nodeId2": "run",
+    "prop3-COLLECTIVE_AVG": 0,
+    "prop3-SINGLE_AVG": 0,
+    "prop3-SINGLE_TALLY": 0,
+    "prop4-COLLECTIVE_AVG": 8.9998197555542,
+    "prop4-SINGLE_AVG": 9,
+    "prop4-SINGLE_TALLY": 0.16666999459266663,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 1.4996700286865234,
+    "id": "basketball-sleep",
+    "nodeId1": "basketball",
+    "nodeId2": "sleep",
+    "prop3-COLLECTIVE_AVG": 0,
+    "prop3-SINGLE_AVG": 0,
+    "prop3-SINGLE_TALLY": 0,
+    "prop4-COLLECTIVE_AVG": 7.333280086517334,
+    "prop4-SINGLE_AVG": 7.3333001136779785,
+    "prop4-SINGLE_TALLY": 1.4996700286865234,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.49966999888420105,
+    "id": "eat-run",
+    "nodeId1": "eat",
+    "nodeId2": "run",
+    "prop3-COLLECTIVE_AVG": 0,
+    "prop3-SINGLE_AVG": 0,
+    "prop3-SINGLE_TALLY": 0,
+    "prop4-COLLECTIVE_AVG": 6.334179878234863,
+    "prop4-SINGLE_AVG": 6.334239959716797,
+    "prop4-SINGLE_TALLY": 0.49966999888420105,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.8326699733734131,
+    "id": "eat-sleep",
+    "nodeId1": "eat",
+    "nodeId2": "sleep",
+    "prop3-COLLECTIVE_AVG": 0,
+    "prop3-SINGLE_AVG": 0,
+    "prop3-SINGLE_TALLY": 0,
+    "prop4-COLLECTIVE_AVG": 6.80040979385376,
+    "prop4-SINGLE_AVG": 6.800449848175049,
+    "prop4-SINGLE_TALLY": 0.8326699733734131,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.49966999888420105,
+    "id": "run-sleep",
+    "nodeId1": "run",
+    "nodeId2": "sleep",
+    "prop3-COLLECTIVE_AVG": 0,
+    "prop3-SINGLE_AVG": 0,
+    "prop3-SINGLE_TALLY": 0,
+    "prop4-COLLECTIVE_AVG": 6.334179878234863,
+    "prop4-SINGLE_AVG": 6.334239959716797,
+    "prop4-SINGLE_TALLY": 0.49966999888420105,
+  },
+]
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 7`] = `
+Object {
+  "basketball": Object {
+    "prop3-COLLECTIVE_AVG": 0,
+    "prop3-SINGLE_AVG": 0,
+    "prop4-COLLECTIVE_AVG": 0.2768997168933448,
+    "prop4-SINGLE_AVG": 0.2769000412755527,
+  },
+  "eat": Object {
+    "prop3-COLLECTIVE_AVG": 0,
+    "prop3-SINGLE_AVG": 0,
+    "prop4-COLLECTIVE_AVG": 0.24163812578472468,
+    "prop4-SINGLE_AVG": 0.24163765230652498,
+  },
+  "run": Object {
+    "prop3-COLLECTIVE_AVG": 0,
+    "prop3-SINGLE_AVG": 0,
+    "prop4-COLLECTIVE_AVG": 0.24671889859695934,
+    "prop4-SINGLE_AVG": 0.24671986924252365,
+  },
+  "sleep": Object {
+    "prop3-COLLECTIVE_AVG": 0,
+    "prop3-SINGLE_AVG": 0,
+    "prop4-COLLECTIVE_AVG": 0.23474325872497115,
+    "prop4-SINGLE_AVG": 0.23474243717539872,
+  },
+}
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 8`] = `
+Object {
+  "basketball": Object {
+    "prop3-COLLECTIVE_AVG": 0,
+    "prop3-SINGLE_AVG": 0,
+    "prop4-COLLECTIVE_AVG": 0.27776467991438153,
+    "prop4-SINGLE_AVG": 0.27776498484966067,
+  },
+  "eat": Object {
+    "prop3-COLLECTIVE_AVG": 0,
+    "prop3-SINGLE_AVG": 0,
+    "prop4-COLLECTIVE_AVG": 0.24125379875232852,
+    "prop4-SINGLE_AVG": 0.24125331121112936,
+  },
+  "run": Object {
+    "prop3-COLLECTIVE_AVG": 0,
+    "prop3-SINGLE_AVG": 0,
+    "prop4-COLLECTIVE_AVG": 0.24734150748870828,
+    "prop4-SINGLE_AVG": 0.2473425617463531,
+  },
+  "sleep": Object {
+    "prop3-COLLECTIVE_AVG": 0,
+    "prop3-SINGLE_AVG": 0,
+    "prop4-COLLECTIVE_AVG": 0.2336400138445812,
+    "prop4-SINGLE_AVG": 0.23363914219285725,
+  },
+}
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 9`] = `
+Array [
+  Object {
+    "COLLECTIVE_TALLY": 1.0829999446868896,
+    "edgeIds": Array [
+      "basketball-eat",
+      "basketball-run",
+      "basketball-sleep",
+    ],
+    "id": "basketball",
+    "prop5-COLLECTIVE_AVG": 7.615419864654541,
+    "prop5-SINGLE_AVG": 7.615419864654541,
+    "prop5-SINGLE_TALLY": 1.0829999446868896,
+    "prop6-COLLECTIVE_AVG": 0,
+    "prop6-SINGLE_AVG": 0,
+    "prop6-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.9160000085830688,
+    "edgeIds": Array [
+      "basketball-eat",
+      "eat-run",
+      "eat-sleep",
+    ],
+    "id": "eat",
+    "prop5-COLLECTIVE_AVG": 7.000539779663086,
+    "prop5-SINGLE_AVG": 7.000539779663086,
+    "prop5-SINGLE_TALLY": 0.9160000085830688,
+    "prop6-COLLECTIVE_AVG": 0,
+    "prop6-SINGLE_AVG": 0,
+    "prop6-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.5830000042915344,
+    "edgeIds": Array [
+      "basketball-run",
+      "eat-run",
+      "run-sleep",
+    ],
+    "id": "run",
+    "prop5-COLLECTIVE_AVG": 6.715270042419434,
+    "prop5-SINGLE_AVG": 6.715270042419434,
+    "prop5-SINGLE_TALLY": 0.5830000042915344,
+    "prop6-COLLECTIVE_AVG": 0,
+    "prop6-SINGLE_AVG": 0,
+    "prop6-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 1.4160000085830688,
+    "edgeIds": Array [
+      "basketball-sleep",
+      "eat-sleep",
+      "run-sleep",
+    ],
+    "id": "sleep",
+    "prop5-COLLECTIVE_AVG": 7.000349998474121,
+    "prop5-SINGLE_AVG": 7.000349998474121,
+    "prop5-SINGLE_TALLY": 1.4160000085830688,
+    "prop6-COLLECTIVE_AVG": 0,
+    "prop6-SINGLE_AVG": 0,
+    "prop6-SINGLE_TALLY": 0,
+  },
+]
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 10`] = `
+Array [
+  Object {
+    "COLLECTIVE_TALLY": 0.49966999888420105,
+    "id": "basketball-eat",
+    "nodeId1": "basketball",
+    "nodeId2": "eat",
+    "prop5-COLLECTIVE_AVG": 8.000280380249023,
+    "prop5-SINGLE_AVG": 8.000340461730957,
+    "prop5-SINGLE_TALLY": 0.49966999888420105,
+    "prop6-COLLECTIVE_AVG": 0,
+    "prop6-SINGLE_AVG": 0,
+    "prop6-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.16666999459266663,
+    "id": "basketball-run",
+    "nodeId1": "basketball",
+    "nodeId2": "run",
+    "prop5-COLLECTIVE_AVG": 8.9998197555542,
+    "prop5-SINGLE_AVG": 9,
+    "prop5-SINGLE_TALLY": 0.16666999459266663,
+    "prop6-COLLECTIVE_AVG": 0,
+    "prop6-SINGLE_AVG": 0,
+    "prop6-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 1.4996700286865234,
+    "id": "basketball-sleep",
+    "nodeId1": "basketball",
+    "nodeId2": "sleep",
+    "prop5-COLLECTIVE_AVG": 7.333280086517334,
+    "prop5-SINGLE_AVG": 7.3333001136779785,
+    "prop5-SINGLE_TALLY": 1.4996700286865234,
+    "prop6-COLLECTIVE_AVG": 0,
+    "prop6-SINGLE_AVG": 0,
+    "prop6-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.49966999888420105,
+    "id": "eat-run",
+    "nodeId1": "eat",
+    "nodeId2": "run",
+    "prop5-COLLECTIVE_AVG": 6.334179878234863,
+    "prop5-SINGLE_AVG": 6.334239959716797,
+    "prop5-SINGLE_TALLY": 0.49966999888420105,
+    "prop6-COLLECTIVE_AVG": 0,
+    "prop6-SINGLE_AVG": 0,
+    "prop6-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.8326699733734131,
+    "id": "eat-sleep",
+    "nodeId1": "eat",
+    "nodeId2": "sleep",
+    "prop5-COLLECTIVE_AVG": 6.80040979385376,
+    "prop5-SINGLE_AVG": 6.800449848175049,
+    "prop5-SINGLE_TALLY": 0.8326699733734131,
+    "prop6-COLLECTIVE_AVG": 0,
+    "prop6-SINGLE_AVG": 0,
+    "prop6-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.49966999888420105,
+    "id": "run-sleep",
+    "nodeId1": "run",
+    "nodeId2": "sleep",
+    "prop5-COLLECTIVE_AVG": 6.334179878234863,
+    "prop5-SINGLE_AVG": 6.334239959716797,
+    "prop5-SINGLE_TALLY": 0.49966999888420105,
+    "prop6-COLLECTIVE_AVG": 0,
+    "prop6-SINGLE_AVG": 0,
+    "prop6-SINGLE_TALLY": 0,
+  },
+]
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 11`] = `
+Object {
+  "basketball": Object {
+    "prop5-COLLECTIVE_AVG": 0.2768997168933448,
+    "prop5-SINGLE_AVG": 0.2769000412755527,
+    "prop6-COLLECTIVE_AVG": 0,
+    "prop6-SINGLE_AVG": 0,
+  },
+  "eat": Object {
+    "prop5-COLLECTIVE_AVG": 0.24163812578472468,
+    "prop5-SINGLE_AVG": 0.24163765230652498,
+    "prop6-COLLECTIVE_AVG": 0,
+    "prop6-SINGLE_AVG": 0,
+  },
+  "run": Object {
+    "prop5-COLLECTIVE_AVG": 0.24671889859695934,
+    "prop5-SINGLE_AVG": 0.24671986924252365,
+    "prop6-COLLECTIVE_AVG": 0,
+    "prop6-SINGLE_AVG": 0,
+  },
+  "sleep": Object {
+    "prop5-COLLECTIVE_AVG": 0.23474325872497115,
+    "prop5-SINGLE_AVG": 0.23474243717539872,
+    "prop6-COLLECTIVE_AVG": 0,
+    "prop6-SINGLE_AVG": 0,
+  },
+}
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 12`] = `
+Object {
+  "basketball": Object {
+    "prop5-COLLECTIVE_AVG": 0.27776467991438153,
+    "prop5-SINGLE_AVG": 0.27776498484966067,
+    "prop6-COLLECTIVE_AVG": 0,
+    "prop6-SINGLE_AVG": 0,
+  },
+  "eat": Object {
+    "prop5-COLLECTIVE_AVG": 0.24125379875232852,
+    "prop5-SINGLE_AVG": 0.24125331121112936,
+    "prop6-COLLECTIVE_AVG": 0,
+    "prop6-SINGLE_AVG": 0,
+  },
+  "run": Object {
+    "prop5-COLLECTIVE_AVG": 0.24734150748870828,
+    "prop5-SINGLE_AVG": 0.2473425617463531,
+    "prop6-COLLECTIVE_AVG": 0,
+    "prop6-SINGLE_AVG": 0,
+  },
+  "sleep": Object {
+    "prop5-COLLECTIVE_AVG": 0.2336400138445812,
+    "prop5-SINGLE_AVG": 0.23363914219285725,
+    "prop6-COLLECTIVE_AVG": 0,
+    "prop6-SINGLE_AVG": 0,
+  },
+}
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 13`] = `
+Array [
+  Object {
+    "COLLECTIVE_TALLY": 1.0829999446868896,
+    "edgeIds": Array [
+      "basketball-eat",
+      "basketball-run",
+      "basketball-sleep",
+    ],
+    "id": "basketball",
+    "prop7-COLLECTIVE_AVG": 0,
+    "prop7-SINGLE_AVG": 0,
+    "prop7-SINGLE_TALLY": 0,
+    "prop8-COLLECTIVE_AVG": 7.615419864654541,
+    "prop8-SINGLE_AVG": 7.615419864654541,
+    "prop8-SINGLE_TALLY": 1.0829999446868896,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.9160000085830688,
+    "edgeIds": Array [
+      "basketball-eat",
+      "eat-run",
+      "eat-sleep",
+    ],
+    "id": "eat",
+    "prop7-COLLECTIVE_AVG": 0,
+    "prop7-SINGLE_AVG": 0,
+    "prop7-SINGLE_TALLY": 0,
+    "prop8-COLLECTIVE_AVG": 7.000539779663086,
+    "prop8-SINGLE_AVG": 7.000539779663086,
+    "prop8-SINGLE_TALLY": 0.9160000085830688,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.5830000042915344,
+    "edgeIds": Array [
+      "basketball-run",
+      "eat-run",
+      "run-sleep",
+    ],
+    "id": "run",
+    "prop7-COLLECTIVE_AVG": 0,
+    "prop7-SINGLE_AVG": 0,
+    "prop7-SINGLE_TALLY": 0,
+    "prop8-COLLECTIVE_AVG": 6.715270042419434,
+    "prop8-SINGLE_AVG": 6.715270042419434,
+    "prop8-SINGLE_TALLY": 0.5830000042915344,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 1.4160000085830688,
+    "edgeIds": Array [
+      "basketball-sleep",
+      "eat-sleep",
+      "run-sleep",
+    ],
+    "id": "sleep",
+    "prop7-COLLECTIVE_AVG": 0,
+    "prop7-SINGLE_AVG": 0,
+    "prop7-SINGLE_TALLY": 0,
+    "prop8-COLLECTIVE_AVG": 7.000349998474121,
+    "prop8-SINGLE_AVG": 7.000349998474121,
+    "prop8-SINGLE_TALLY": 1.4160000085830688,
+  },
+]
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 14`] = `
+Array [
+  Object {
+    "COLLECTIVE_TALLY": 0.49966999888420105,
+    "id": "basketball-eat",
+    "nodeId1": "basketball",
+    "nodeId2": "eat",
+    "prop7-COLLECTIVE_AVG": 0,
+    "prop7-SINGLE_AVG": 0,
+    "prop7-SINGLE_TALLY": 0,
+    "prop8-COLLECTIVE_AVG": 8.000280380249023,
+    "prop8-SINGLE_AVG": 8.000340461730957,
+    "prop8-SINGLE_TALLY": 0.49966999888420105,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.16666999459266663,
+    "id": "basketball-run",
+    "nodeId1": "basketball",
+    "nodeId2": "run",
+    "prop7-COLLECTIVE_AVG": 0,
+    "prop7-SINGLE_AVG": 0,
+    "prop7-SINGLE_TALLY": 0,
+    "prop8-COLLECTIVE_AVG": 8.9998197555542,
+    "prop8-SINGLE_AVG": 9,
+    "prop8-SINGLE_TALLY": 0.16666999459266663,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 1.4996700286865234,
+    "id": "basketball-sleep",
+    "nodeId1": "basketball",
+    "nodeId2": "sleep",
+    "prop7-COLLECTIVE_AVG": 0,
+    "prop7-SINGLE_AVG": 0,
+    "prop7-SINGLE_TALLY": 0,
+    "prop8-COLLECTIVE_AVG": 7.333280086517334,
+    "prop8-SINGLE_AVG": 7.3333001136779785,
+    "prop8-SINGLE_TALLY": 1.4996700286865234,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.49966999888420105,
+    "id": "eat-run",
+    "nodeId1": "eat",
+    "nodeId2": "run",
+    "prop7-COLLECTIVE_AVG": 0,
+    "prop7-SINGLE_AVG": 0,
+    "prop7-SINGLE_TALLY": 0,
+    "prop8-COLLECTIVE_AVG": 6.334179878234863,
+    "prop8-SINGLE_AVG": 6.334239959716797,
+    "prop8-SINGLE_TALLY": 0.49966999888420105,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.8326699733734131,
+    "id": "eat-sleep",
+    "nodeId1": "eat",
+    "nodeId2": "sleep",
+    "prop7-COLLECTIVE_AVG": 0,
+    "prop7-SINGLE_AVG": 0,
+    "prop7-SINGLE_TALLY": 0,
+    "prop8-COLLECTIVE_AVG": 6.80040979385376,
+    "prop8-SINGLE_AVG": 6.800449848175049,
+    "prop8-SINGLE_TALLY": 0.8326699733734131,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.49966999888420105,
+    "id": "run-sleep",
+    "nodeId1": "run",
+    "nodeId2": "sleep",
+    "prop7-COLLECTIVE_AVG": 0,
+    "prop7-SINGLE_AVG": 0,
+    "prop7-SINGLE_TALLY": 0,
+    "prop8-COLLECTIVE_AVG": 6.334179878234863,
+    "prop8-SINGLE_AVG": 6.334239959716797,
+    "prop8-SINGLE_TALLY": 0.49966999888420105,
+  },
+]
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 15`] = `
+Object {
+  "basketball": Object {
+    "prop7-COLLECTIVE_AVG": 0,
+    "prop7-SINGLE_AVG": 0,
+    "prop8-COLLECTIVE_AVG": 0.2768997168933448,
+    "prop8-SINGLE_AVG": 0.2769000412755527,
+  },
+  "eat": Object {
+    "prop7-COLLECTIVE_AVG": 0,
+    "prop7-SINGLE_AVG": 0,
+    "prop8-COLLECTIVE_AVG": 0.24163812578472468,
+    "prop8-SINGLE_AVG": 0.24163765230652498,
+  },
+  "run": Object {
+    "prop7-COLLECTIVE_AVG": 0,
+    "prop7-SINGLE_AVG": 0,
+    "prop8-COLLECTIVE_AVG": 0.24671889859695934,
+    "prop8-SINGLE_AVG": 0.24671986924252365,
+  },
+  "sleep": Object {
+    "prop7-COLLECTIVE_AVG": 0,
+    "prop7-SINGLE_AVG": 0,
+    "prop8-COLLECTIVE_AVG": 0.23474325872497115,
+    "prop8-SINGLE_AVG": 0.23474243717539872,
+  },
+}
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 16`] = `
+Object {
+  "basketball": Object {
+    "prop7-COLLECTIVE_AVG": 0,
+    "prop7-SINGLE_AVG": 0,
+    "prop8-COLLECTIVE_AVG": 0.27776467991438153,
+    "prop8-SINGLE_AVG": 0.27776498484966067,
+  },
+  "eat": Object {
+    "prop7-COLLECTIVE_AVG": 0,
+    "prop7-SINGLE_AVG": 0,
+    "prop8-COLLECTIVE_AVG": 0.24125379875232852,
+    "prop8-SINGLE_AVG": 0.24125331121112936,
+  },
+  "run": Object {
+    "prop7-COLLECTIVE_AVG": 0,
+    "prop7-SINGLE_AVG": 0,
+    "prop8-COLLECTIVE_AVG": 0.24734150748870828,
+    "prop8-SINGLE_AVG": 0.2473425617463531,
+  },
+  "sleep": Object {
+    "prop7-COLLECTIVE_AVG": 0,
+    "prop7-SINGLE_AVG": 0,
+    "prop8-COLLECTIVE_AVG": 0.2336400138445812,
+    "prop8-SINGLE_AVG": 0.23363914219285725,
+  },
+}
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 17`] = `
+Array [
+  Object {
+    "COLLECTIVE_TALLY": 1.0829999446868896,
+    "edgeIds": Array [
+      "basketball-eat",
+      "basketball-run",
+      "basketball-sleep",
+    ],
+    "id": "basketball",
+    "prop10-COLLECTIVE_AVG": 0,
+    "prop10-SINGLE_AVG": 0,
+    "prop10-SINGLE_TALLY": 0,
+    "prop9-COLLECTIVE_AVG": 7.615419864654541,
+    "prop9-SINGLE_AVG": 7.615419864654541,
+    "prop9-SINGLE_TALLY": 1.0829999446868896,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.9160000085830688,
+    "edgeIds": Array [
+      "basketball-eat",
+      "eat-run",
+      "eat-sleep",
+    ],
+    "id": "eat",
+    "prop10-COLLECTIVE_AVG": 0,
+    "prop10-SINGLE_AVG": 0,
+    "prop10-SINGLE_TALLY": 0,
+    "prop9-COLLECTIVE_AVG": 7.000539779663086,
+    "prop9-SINGLE_AVG": 7.000539779663086,
+    "prop9-SINGLE_TALLY": 0.9160000085830688,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.5830000042915344,
+    "edgeIds": Array [
+      "basketball-run",
+      "eat-run",
+      "run-sleep",
+    ],
+    "id": "run",
+    "prop10-COLLECTIVE_AVG": 0,
+    "prop10-SINGLE_AVG": 0,
+    "prop10-SINGLE_TALLY": 0,
+    "prop9-COLLECTIVE_AVG": 6.715270042419434,
+    "prop9-SINGLE_AVG": 6.715270042419434,
+    "prop9-SINGLE_TALLY": 0.5830000042915344,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 1.4160000085830688,
+    "edgeIds": Array [
+      "basketball-sleep",
+      "eat-sleep",
+      "run-sleep",
+    ],
+    "id": "sleep",
+    "prop10-COLLECTIVE_AVG": 0,
+    "prop10-SINGLE_AVG": 0,
+    "prop10-SINGLE_TALLY": 0,
+    "prop9-COLLECTIVE_AVG": 7.000349998474121,
+    "prop9-SINGLE_AVG": 7.000349998474121,
+    "prop9-SINGLE_TALLY": 1.4160000085830688,
+  },
+]
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 18`] = `
+Array [
+  Object {
+    "COLLECTIVE_TALLY": 0.49966999888420105,
+    "id": "basketball-eat",
+    "nodeId1": "basketball",
+    "nodeId2": "eat",
+    "prop10-COLLECTIVE_AVG": 0,
+    "prop10-SINGLE_AVG": 0,
+    "prop10-SINGLE_TALLY": 0,
+    "prop9-COLLECTIVE_AVG": 8.000280380249023,
+    "prop9-SINGLE_AVG": 8.000340461730957,
+    "prop9-SINGLE_TALLY": 0.49966999888420105,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.16666999459266663,
+    "id": "basketball-run",
+    "nodeId1": "basketball",
+    "nodeId2": "run",
+    "prop10-COLLECTIVE_AVG": 0,
+    "prop10-SINGLE_AVG": 0,
+    "prop10-SINGLE_TALLY": 0,
+    "prop9-COLLECTIVE_AVG": 8.9998197555542,
+    "prop9-SINGLE_AVG": 9,
+    "prop9-SINGLE_TALLY": 0.16666999459266663,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 1.4996700286865234,
+    "id": "basketball-sleep",
+    "nodeId1": "basketball",
+    "nodeId2": "sleep",
+    "prop10-COLLECTIVE_AVG": 0,
+    "prop10-SINGLE_AVG": 0,
+    "prop10-SINGLE_TALLY": 0,
+    "prop9-COLLECTIVE_AVG": 7.333280086517334,
+    "prop9-SINGLE_AVG": 7.3333001136779785,
+    "prop9-SINGLE_TALLY": 1.4996700286865234,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.49966999888420105,
+    "id": "eat-run",
+    "nodeId1": "eat",
+    "nodeId2": "run",
+    "prop10-COLLECTIVE_AVG": 0,
+    "prop10-SINGLE_AVG": 0,
+    "prop10-SINGLE_TALLY": 0,
+    "prop9-COLLECTIVE_AVG": 6.334179878234863,
+    "prop9-SINGLE_AVG": 6.334239959716797,
+    "prop9-SINGLE_TALLY": 0.49966999888420105,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.8326699733734131,
+    "id": "eat-sleep",
+    "nodeId1": "eat",
+    "nodeId2": "sleep",
+    "prop10-COLLECTIVE_AVG": 0,
+    "prop10-SINGLE_AVG": 0,
+    "prop10-SINGLE_TALLY": 0,
+    "prop9-COLLECTIVE_AVG": 6.80040979385376,
+    "prop9-SINGLE_AVG": 6.800449848175049,
+    "prop9-SINGLE_TALLY": 0.8326699733734131,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.49966999888420105,
+    "id": "run-sleep",
+    "nodeId1": "run",
+    "nodeId2": "sleep",
+    "prop10-COLLECTIVE_AVG": 0,
+    "prop10-SINGLE_AVG": 0,
+    "prop10-SINGLE_TALLY": 0,
+    "prop9-COLLECTIVE_AVG": 6.334179878234863,
+    "prop9-SINGLE_AVG": 6.334239959716797,
+    "prop9-SINGLE_TALLY": 0.49966999888420105,
+  },
+]
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 19`] = `
+Object {
+  "basketball": Object {
+    "prop10-COLLECTIVE_AVG": 0,
+    "prop10-SINGLE_AVG": 0,
+    "prop9-COLLECTIVE_AVG": 0.2768997168933448,
+    "prop9-SINGLE_AVG": 0.2769000412755527,
+  },
+  "eat": Object {
+    "prop10-COLLECTIVE_AVG": 0,
+    "prop10-SINGLE_AVG": 0,
+    "prop9-COLLECTIVE_AVG": 0.24163812578472468,
+    "prop9-SINGLE_AVG": 0.24163765230652498,
+  },
+  "run": Object {
+    "prop10-COLLECTIVE_AVG": 0,
+    "prop10-SINGLE_AVG": 0,
+    "prop9-COLLECTIVE_AVG": 0.24671889859695934,
+    "prop9-SINGLE_AVG": 0.24671986924252365,
+  },
+  "sleep": Object {
+    "prop10-COLLECTIVE_AVG": 0,
+    "prop10-SINGLE_AVG": 0,
+    "prop9-COLLECTIVE_AVG": 0.23474325872497115,
+    "prop9-SINGLE_AVG": 0.23474243717539872,
+  },
+}
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 20`] = `
+Object {
+  "basketball": Object {
+    "prop10-COLLECTIVE_AVG": 0,
+    "prop10-SINGLE_AVG": 0,
+    "prop9-COLLECTIVE_AVG": 0.27776467991438153,
+    "prop9-SINGLE_AVG": 0.27776498484966067,
+  },
+  "eat": Object {
+    "prop10-COLLECTIVE_AVG": 0,
+    "prop10-SINGLE_AVG": 0,
+    "prop9-COLLECTIVE_AVG": 0.24125379875232852,
+    "prop9-SINGLE_AVG": 0.24125331121112936,
+  },
+  "run": Object {
+    "prop10-COLLECTIVE_AVG": 0,
+    "prop10-SINGLE_AVG": 0,
+    "prop9-COLLECTIVE_AVG": 0.24734150748870828,
+    "prop9-SINGLE_AVG": 0.2473425617463531,
+  },
+  "sleep": Object {
+    "prop10-COLLECTIVE_AVG": 0,
+    "prop10-SINGLE_AVG": 0,
+    "prop9-COLLECTIVE_AVG": 0.2336400138445812,
+    "prop9-SINGLE_AVG": 0.23363914219285725,
+  },
+}
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 21`] = `
+Array [
+  Object {
+    "COLLECTIVE_TALLY": 1.0829999446868896,
+    "edgeIds": Array [
+      "basketball-eat",
+      "basketball-run",
+      "basketball-sleep",
+    ],
+    "id": "basketball",
+    "prop11-COLLECTIVE_AVG": 7.615419864654541,
+    "prop11-SINGLE_AVG": 7.615419864654541,
+    "prop11-SINGLE_TALLY": 1.0829999446868896,
+    "prop12-COLLECTIVE_AVG": 0,
+    "prop12-SINGLE_AVG": 0,
+    "prop12-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.9160000085830688,
+    "edgeIds": Array [
+      "basketball-eat",
+      "eat-run",
+      "eat-sleep",
+    ],
+    "id": "eat",
+    "prop11-COLLECTIVE_AVG": 7.000539779663086,
+    "prop11-SINGLE_AVG": 7.000539779663086,
+    "prop11-SINGLE_TALLY": 0.9160000085830688,
+    "prop12-COLLECTIVE_AVG": 0,
+    "prop12-SINGLE_AVG": 0,
+    "prop12-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.5830000042915344,
+    "edgeIds": Array [
+      "basketball-run",
+      "eat-run",
+      "run-sleep",
+    ],
+    "id": "run",
+    "prop11-COLLECTIVE_AVG": 6.715270042419434,
+    "prop11-SINGLE_AVG": 6.715270042419434,
+    "prop11-SINGLE_TALLY": 0.5830000042915344,
+    "prop12-COLLECTIVE_AVG": 0,
+    "prop12-SINGLE_AVG": 0,
+    "prop12-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 1.4160000085830688,
+    "edgeIds": Array [
+      "basketball-sleep",
+      "eat-sleep",
+      "run-sleep",
+    ],
+    "id": "sleep",
+    "prop11-COLLECTIVE_AVG": 7.000349998474121,
+    "prop11-SINGLE_AVG": 7.000349998474121,
+    "prop11-SINGLE_TALLY": 1.4160000085830688,
+    "prop12-COLLECTIVE_AVG": 0,
+    "prop12-SINGLE_AVG": 0,
+    "prop12-SINGLE_TALLY": 0,
+  },
+]
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 22`] = `
+Array [
+  Object {
+    "COLLECTIVE_TALLY": 0.49966999888420105,
+    "id": "basketball-eat",
+    "nodeId1": "basketball",
+    "nodeId2": "eat",
+    "prop11-COLLECTIVE_AVG": 8.000280380249023,
+    "prop11-SINGLE_AVG": 8.000340461730957,
+    "prop11-SINGLE_TALLY": 0.49966999888420105,
+    "prop12-COLLECTIVE_AVG": 0,
+    "prop12-SINGLE_AVG": 0,
+    "prop12-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.16666999459266663,
+    "id": "basketball-run",
+    "nodeId1": "basketball",
+    "nodeId2": "run",
+    "prop11-COLLECTIVE_AVG": 8.9998197555542,
+    "prop11-SINGLE_AVG": 9,
+    "prop11-SINGLE_TALLY": 0.16666999459266663,
+    "prop12-COLLECTIVE_AVG": 0,
+    "prop12-SINGLE_AVG": 0,
+    "prop12-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 1.4996700286865234,
+    "id": "basketball-sleep",
+    "nodeId1": "basketball",
+    "nodeId2": "sleep",
+    "prop11-COLLECTIVE_AVG": 7.333280086517334,
+    "prop11-SINGLE_AVG": 7.3333001136779785,
+    "prop11-SINGLE_TALLY": 1.4996700286865234,
+    "prop12-COLLECTIVE_AVG": 0,
+    "prop12-SINGLE_AVG": 0,
+    "prop12-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.49966999888420105,
+    "id": "eat-run",
+    "nodeId1": "eat",
+    "nodeId2": "run",
+    "prop11-COLLECTIVE_AVG": 6.334179878234863,
+    "prop11-SINGLE_AVG": 6.334239959716797,
+    "prop11-SINGLE_TALLY": 0.49966999888420105,
+    "prop12-COLLECTIVE_AVG": 0,
+    "prop12-SINGLE_AVG": 0,
+    "prop12-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.8326699733734131,
+    "id": "eat-sleep",
+    "nodeId1": "eat",
+    "nodeId2": "sleep",
+    "prop11-COLLECTIVE_AVG": 6.80040979385376,
+    "prop11-SINGLE_AVG": 6.800449848175049,
+    "prop11-SINGLE_TALLY": 0.8326699733734131,
+    "prop12-COLLECTIVE_AVG": 0,
+    "prop12-SINGLE_AVG": 0,
+    "prop12-SINGLE_TALLY": 0,
+  },
+  Object {
+    "COLLECTIVE_TALLY": 0.49966999888420105,
+    "id": "run-sleep",
+    "nodeId1": "run",
+    "nodeId2": "sleep",
+    "prop11-COLLECTIVE_AVG": 6.334179878234863,
+    "prop11-SINGLE_AVG": 6.334239959716797,
+    "prop11-SINGLE_TALLY": 0.49966999888420105,
+    "prop12-COLLECTIVE_AVG": 0,
+    "prop12-SINGLE_AVG": 0,
+    "prop12-SINGLE_TALLY": 0,
+  },
+]
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 23`] = `
+Object {
+  "basketball": Object {
+    "prop11-COLLECTIVE_AVG": 0.2768997168933448,
+    "prop11-SINGLE_AVG": 0.2769000412755527,
+    "prop12-COLLECTIVE_AVG": 0,
+    "prop12-SINGLE_AVG": 0,
+  },
+  "eat": Object {
+    "prop11-COLLECTIVE_AVG": 0.24163812578472468,
+    "prop11-SINGLE_AVG": 0.24163765230652498,
+    "prop12-COLLECTIVE_AVG": 0,
+    "prop12-SINGLE_AVG": 0,
+  },
+  "run": Object {
+    "prop11-COLLECTIVE_AVG": 0.24671889859695934,
+    "prop11-SINGLE_AVG": 0.24671986924252365,
+    "prop12-COLLECTIVE_AVG": 0,
+    "prop12-SINGLE_AVG": 0,
+  },
+  "sleep": Object {
+    "prop11-COLLECTIVE_AVG": 0.23474325872497115,
+    "prop11-SINGLE_AVG": 0.23474243717539872,
+    "prop12-COLLECTIVE_AVG": 0,
+    "prop12-SINGLE_AVG": 0,
+  },
+}
+`;
+
+exports[`RealmGraphManager Should perform PageRank on Graphs 1-6 24`] = `
+Object {
+  "basketball": Object {
+    "prop11-COLLECTIVE_AVG": 0.27776467991438153,
+    "prop11-SINGLE_AVG": 0.27776498484966067,
+    "prop12-COLLECTIVE_AVG": 0,
+    "prop12-SINGLE_AVG": 0,
+  },
+  "eat": Object {
+    "prop11-COLLECTIVE_AVG": 0.24125379875232852,
+    "prop11-SINGLE_AVG": 0.24125331121112936,
+    "prop12-COLLECTIVE_AVG": 0,
+    "prop12-SINGLE_AVG": 0,
+  },
+  "run": Object {
+    "prop11-COLLECTIVE_AVG": 0.24734150748870828,
+    "prop11-SINGLE_AVG": 0.2473425617463531,
+    "prop12-COLLECTIVE_AVG": 0,
+    "prop12-SINGLE_AVG": 0,
+  },
+  "sleep": Object {
+    "prop11-COLLECTIVE_AVG": 0.2336400138445812,
+    "prop11-SINGLE_AVG": 0.23363914219285725,
+    "prop12-COLLECTIVE_AVG": 0,
+    "prop12-SINGLE_AVG": 0,
+  },
+}
+`;

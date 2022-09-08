@@ -1,11 +1,11 @@
 import DictUtils from '@asianpersonn/dict-utils';
 import { genPropertiesObj } from "catalyst-graph";
 
-// My imports
-import { ID_KEY } from "./constants";
+// TYPES
+import { Dict } from '../types';
 
-// Types
-import { Dict } from '../types/global';
+// CONSTANTS
+export const ID_KEY: string = 'id';
 
 /**
  * Create a base schema for node/edge GraphEntities
@@ -14,7 +14,7 @@ import { Dict } from '../types/global';
  * @param properties
  * @returns
  */
- export const genSchema = (schemaName: string, properties: string[]): Realm.ObjectSchema => {
+ export const genBaseSchema = (schemaName: string, properties: string[]): Realm.ObjectSchema => {
     // 1. Create dummy graph entity
     const graphProperties: Dict<any> = genPropertiesObj(properties);
 

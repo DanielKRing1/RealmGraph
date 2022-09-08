@@ -16,6 +16,13 @@
   dependencies:
     "npm-run-all" "^4.1.5"
 
+"@asianpersonn/metarealm@^1.0.4":
+  "integrity" "sha512-zoNaouxVpjftKYKDEAel1wTM9BnEKuXx3LBHA/9dduBxyEcoV8Pje/gmb295lRXXz3lJofZFNDn8+6aNi4MFvQ=="
+  "resolved" "https://registry.npmjs.org/@asianpersonn/metarealm/-/metarealm-1.0.4.tgz"
+  "version" "1.0.4"
+  dependencies:
+    "realm" "^10.13.0"
+
 "@asianpersonn/pagerank@^1.0.7":
   "integrity" "sha512-blxWb2m/1XzXxGtgwyq85aY2rK56/YiKKj4ZpI9jJRfDF4qY26+b6UOyU3AlllhCx//XgFNPIlX6ygtCh6YGlA=="
   "resolved" "https://registry.npmjs.org/@asianpersonn/pagerank/-/pagerank-1.0.7.tgz"
@@ -1177,10 +1184,10 @@
   "resolved" "https://registry.npmjs.org/caseless/-/caseless-0.12.0.tgz"
   "version" "0.12.0"
 
-"catalyst-graph@^1.0.17":
-  "integrity" "sha512-bdZ+SIRuGzmNoFt8bzcuO4tRJup06btUsWcppbHkD3+OV3g8JrDiSGEd79sJLZWvztq36Z4IFn63AP6paia9Aw=="
-  "resolved" "https://registry.npmjs.org/catalyst-graph/-/catalyst-graph-1.0.17.tgz"
-  "version" "1.0.17"
+"catalyst-graph@^1.0.19":
+  "integrity" "sha512-RSqHTEId1ztQlSs24Ztu5qZAezxY3WbPCyfY9/EjGOR3nHBoaUo8saoXygsqbCJ+jRcR91bFs/csHCJz6nNB4g=="
+  "resolved" "https://registry.npmjs.org/catalyst-graph/-/catalyst-graph-1.0.19.tgz"
+  "version" "1.0.19"
   dependencies:
     "typescript" "^4.6.3"
 
@@ -1528,13 +1535,6 @@
   "version" "2.0.1"
   dependencies:
     "webidl-conversions" "^5.0.0"
-
-"dynamic-realm@^1.0.44":
-  "integrity" "sha512-U58kiOYSB4CfGLlWg/JIFvS65ujrC/gO2FytPK6suLM1MiAHWamH/fNpZikTGHyPulCZmnYxoAJyDzXyv8V0bw=="
-  "resolved" "https://registry.npmjs.org/dynamic-realm/-/dynamic-realm-1.0.44.tgz"
-  "version" "1.0.44"
-  dependencies:
-    "realm" "^10.13.0"
 
 "ecc-jsbn@~0.1.1":
   "integrity" "sha1-OoOpBOVDUyh4dMVkt1SThoSamMk="
