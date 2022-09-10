@@ -2,24 +2,14 @@ import MetaRealm from '@asianpersonn/metarealm';
 import { getBaseNameFromSchemaName } from '../constants/naming';
 
 import { createRealmGraph, loadRealmGraph } from "../RealmGraph/realmGraph";
-import { RealmGraph, RGCreateParams, RGLoadableParams } from "../RealmGraph/types";
+import { RealmGraph, RGCreateParams } from "../RealmGraph/types";
 import { Dict } from "../types";
-import { RGManagerCreate } from "./types";
+import { RealmGraphManager } from './types';
 
-type RealmGraphManager = {
-    getGraph: (graphName: string) => RealmGraph | undefined;
-    createGraph: ({ metaRealmPath, loadableRealmPath, graphName, propertyNames }: RGManagerCreate) => Promise<RealmGraph>,
-    rmGraph: (graphName: string) => void;
-    loadGraphs: (metaRealmPath: string, loadableRealmPath: string) => Promise<boolean>,
-
-    getLoadableGraphNames: (metaRealmPath: string, loadableRealmPath: string) => string[];
-    getAllLoadedGraphNames: () => string[],
-    getAllLoadedGraphs: () => RealmGraph[],
-};
 const createGraphManager = (): RealmGraphManager => {
     const realmGraphMap: Dict<RealmGraph> = {};
     
-    const getGraph = (graphName: string) => realmGraphMap[graphName];
+    const getGraph = (graphName: string): RealmGraph | undefined => realmGraphMap[graphName];
 
     const createGraph = async ({ metaRealmPath, loadableRealmPath, graphName, propertyNames }: RGCreateParams) => {
         // 1. Create new RealmGraph if not exists
@@ -49,7 +39,15 @@ const createGraphManager = (): RealmGraphManager => {
 
     const hasRealmGraph = (graphName: string): boolean => !!realmGraphMap[graphName];
     
-    const loadGraphs = async (metaRealmPath: string, loadableRealmPath: string): Promise<boolean> => {
+    /**
+     * Load all saved RealmStacks
+     * Return number of RealmStacks loaded
+     * 
+     * @param metaRealmPath 
+     * @param loadableRealmPath 
+     * @returns 
+     */
+    const loadGraphs = async (metaRealmPath: string, loadableRealmPath: string): Promise<number> => {
         // 1. Get all Loadable graph names
         const graphNames: string[] = getLoadableGraphNames(metaRealmPath, loadableRealmPath);
 
@@ -69,7 +67,7 @@ const createGraphManager = (): RealmGraphManager => {
         // 4. Reload realms after loading all RealmGraphs
         await MetaRealm.LoadableRealmManager.reloadRealm({ metaRealmPath, loadableRealmPath });
 
-        return true;
+        return graphNames.length;
     }
 
     const getLoadableGraphNames = (metaRealmPath: string, loadableRealmPath: string): string[] => {

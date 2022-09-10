@@ -1,22 +1,12 @@
-import Realm from 'realm';
+import { RealmGraph, RGCreateParams } from "../RealmGraph/types";
 
-export type RGManagerCreate = {
-    metaRealmPath: string;
-    loadableRealmPath: string;
-    graphName: string;
-    propertyNames: string[];
-};
+export type RealmGraphManager = {
+    getGraph: (graphName: string) => RealmGraph | undefined;
+    createGraph: (params: RGCreateParams) => Promise<RealmGraph>;
+    rmGraph: (graphName: string) => void;
+    loadGraphs: (metaRealmPath: string, loadableRealmPath: string) => Promise<number>;
 
-export type RGManagerGetOrCreate = {
-    existingRealm?: Realm,
-    graphName: string;
-    metaRealmPath: string;
-    loadableRealmPath: string;
-    propertyNames: string[];
-};
-
-export type RGManagerRemove = {
-    metaRealmPath: string;
-    loadableRealmPath: string;
-    graphName: string;
+    getLoadableGraphNames: (metaRealmPath: string, loadableRealmPath: string) => string[];
+    getAllLoadedGraphNames: () => string[];
+    getAllLoadedGraphs: () => RealmGraph[];
 };
