@@ -102,6 +102,11 @@ describe('createRealmGraph', () => {
         expect(graph4.getPropertyNames().sort()).toEqual(PROPERTY_NAMES4.sort());
     });
 
+    it('Should throw an error for a non-existant RealmGraph name', async () => {
+        const NONEXISTANT_GRAPH_NAME: string = 'DUMMY_GRAPH_NAME';
+        expect(() => GraphManager.getGraph(NONEXISTANT_GRAPH_NAME)).toThrowError();
+    });
+
     
     it('Should remove Graph1', async () => {
         await GraphManager.rmGraph(GRAPH_NAME1);

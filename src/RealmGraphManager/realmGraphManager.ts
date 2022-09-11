@@ -4,12 +4,17 @@ import { getBaseNameFromSchemaName } from '../constants/naming';
 import { createRealmGraph, loadRealmGraph } from "../RealmGraph/realmGraph";
 import { RealmGraph, RGCreateParams } from "../RealmGraph/types";
 import { Dict } from "../types";
+import { gen_NO_GRAPH_ERROR } from './errors';
 import { RealmGraphManager } from './types';
 
 const createGraphManager = (): RealmGraphManager => {
     const realmGraphMap: Dict<RealmGraph> = {};
     
-    const getGraph = (graphName: string): RealmGraph | undefined => realmGraphMap[graphName];
+    const getGraph = (graphName: string): RealmGraph | never => {
+        if(!hasRealmGraph(graphName)) throw gen_NO_GRAPH_ERROR(graphName);
+
+        return realmGraphMap[graphName];
+    }
 
     const createGraph = async ({ metaRealmPath, loadableRealmPath, graphName, propertyNames }: RGCreateParams) => {
         // 1. Create new RealmGraph if not exists
