@@ -106,7 +106,7 @@ describe('RealmGraphManager', () => {
         // // console.log(realmGraphManager.realmGraphCache[manager1GraphName1].realm);
 
         // // console.log(graph.getAllNodes());
-        // // console.log(graph.getAllEdges());
+        console.log(graph.getAllEdges().toJSON());
     });
 
     it('Should rate Graph2', () => {
@@ -199,6 +199,8 @@ describe('RealmGraphManager', () => {
         expect(graph1.pageRank(1, 1)).toMatchSnapshot();
         expect(graph1.pageRank(50, 1)).toMatchSnapshot();
 
+        console.log(graph1.rankMostInfluentialToCentralSet(['skate'], 1));
+        console.log(graph1.rankMostInfluentialToCentralSet(['skate'], 50));
 
         const graph2: RealmGraph = realmGraphManager.getGraph(GRAPH_NAME2);
         const expectedPageRankResult2: Dict<Dict<number>> = {

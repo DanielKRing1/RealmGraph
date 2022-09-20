@@ -1184,10 +1184,10 @@
   "resolved" "https://registry.npmjs.org/caseless/-/caseless-0.12.0.tgz"
   "version" "0.12.0"
 
-"catalyst-graph@^1.0.19":
-  "integrity" "sha512-RSqHTEId1ztQlSs24Ztu5qZAezxY3WbPCyfY9/EjGOR3nHBoaUo8saoXygsqbCJ+jRcR91bFs/csHCJz6nNB4g=="
-  "resolved" "https://registry.npmjs.org/catalyst-graph/-/catalyst-graph-1.0.19.tgz"
-  "version" "1.0.19"
+"catalyst-graph@^1.0.22":
+  "integrity" "sha512-6tnvAnRAz7tM2ooVbdAVI4DSfLtrMNavPuy06zZBEr5PbFRGZDIx4CgP+cV82v2xuUFeXJYvmagQZ/SHCPQ31w=="
+  "resolved" "https://registry.npmjs.org/catalyst-graph/-/catalyst-graph-1.0.22.tgz"
+  "version" "1.0.22"
   dependencies:
     "typescript" "^4.6.3"
 
