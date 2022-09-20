@@ -12,13 +12,6 @@ export const getBaseNameFromSchemaName = (schemaName: string) => {
     return baseName;
 };
 
-export const getGraphPropertyNameFromKey = (rawPropertyName: string) => {
-    const index: number = rawPropertyName.lastIndexOf(CG_PROPERTY_DELIMITER);
-    const baseName: string = rawPropertyName.slice(0, index);
-
-    return baseName;
-};
-
 export const EDGE_NAME_DELIM: string = '-';
 /**
  * Sort node 1 and 2 id's alphabetically and concat with a delim to create id

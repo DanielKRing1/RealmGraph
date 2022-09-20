@@ -2,9 +2,9 @@ import Realm from 'realm';
 import DictUtils from '@asianpersonn/dict-utils';
 import MetaRealm, { SaveSchemaParams } from '@asianpersonn/metarealm';
 import { pageRank as genericPageRank, getInitialWeights, redistributeNodeWeight, inflateEdgeAttrs } from '@asianpersonn/pagerank';
-import CatalystGraph, { CGEdge, CGNode, EDGE_IDS_KEY, genCollectiveAverageName, genCollectiveTallyName, genSingleAverageName, GraphEntity, GRAPH_ENTITY_ID_KEY, RateReturn, RatingMode } from 'catalyst-graph';
+import CatalystGraph, { CGEdge, CGNode, EDGE_IDS_KEY, genCollectiveAverageName, genCollectiveTallyName, genSingleAverageName, genSingleTallyName, getGraphPropertyNameFromKey, GraphEntity, GRAPH_ENTITY_ID_KEY, RateReturn, RatingMode } from 'catalyst-graph';
 
-import { genEdgeName, genEdgeSchemaName, genNodeSchemaName, getGraphPropertyNameFromKey } from '../constants/naming';
+import { genEdgeName, genEdgeSchemaName, genNodeSchemaName } from '../constants/naming';
 import { genBaseSchema } from '../constants/schemas';
 
 import { Dict } from '../types';
@@ -101,6 +101,18 @@ const initializeRealmGraph = async ({ metaRealmPath, loadableRealmPath, graphNam
         return rateResult!;
     }
 
+    const undoRate = (propertyName: string, nodeIds: string[], rating: number, weights: number[], ratingMode: RatingMode): RateReturn => {
+        let rateResult: RateReturn;
+
+        // TODO Might actually want to do this to avoid so many write transactions with 'updateNode/Edge' methods
+        // Wrap in write transaction to apply updates directly to Realm objects during rate
+        // this.realm?.write(() => {
+        rateResult = _catalystGraph.undoRate(propertyName, nodeIds, rating, weights, ratingMode);
+        // });
+
+        return rateResult!;
+    }
+
     // PAGE RANK
 
     function _getPageRankNodeMethods() {
@@ -144,6 +156,20 @@ const initializeRealmGraph = async ({ metaRealmPath, loadableRealmPath, graphNam
         // 4. Get edge attrs
         const keysToKeep: string[] = _getPageRankWeightKeys();
         const getEdgeAttrs = (edge: CGEdge) => DictUtils.copyDictKeep(edge, keysToKeep);
+        // const getEdgeAttrs = (edge: CGEdge) => {
+        //     const keysToKeepEdge: Dict<number> = DictUtils.copyDictKeep(edge, keysToKeep);
+
+        //     const ratingTallyEdge: Dict<number> = DictUtils.mutateDict(keysToKeepEdge, (key: string, val: number) => {
+        //         const rawPropertyName: string = getGraphPropertyNameFromKey(key);
+                
+        //         const propertyTallyKey: string = genSingleTallyName(rawPropertyName);
+        //         const propertyTally: number = edge[propertyTallyKey];
+
+        //         return val * propertyTally;
+        //     });
+
+        //     return ratingTallyEdge;
+        // }
 
         // 5. Get destination node, given a node and one of its edges
         const getDestinationNode = (node: CGNode, edge: CGEdge): CGNode => {
@@ -250,6 +276,111 @@ const initializeRealmGraph = async ({ metaRealmPath, loadableRealmPath, graphNam
         return genericPageRank(initialMapBiased, allNodesBiased, getNodeId, getEdgesInflated, getEdgeAttrs, getDestinationNode, iterations, dampingFactor);
     }
 
+    // ALGORITHMS
+    
+    /**
+     * What connected nodes a target node is commonly done with, based on edge Collective tally
+     * 
+     * @param targetNodeId 
+     * @returns 
+     */
+    async function commonlyDoneWith(targetNodeId: string): Promise<CGEdge[]> {
+        const realm: Realm = await MetaRealm.LoadableRealmManager.loadRealm({ metaRealmPath, loadableRealmPath });
+        const node: (Realm.Object & CGNode) | undefined = realm.objectForPrimaryKey(genNodeSchemaName(graphName), targetNodeId);
+        if(node === undefined) return [];
+
+        const desiredEdgeIds: Set<string> = new Set(node.edgeIds);
+        const edges: CGEdge[] = realm.objects(genEdgeSchemaName(graphName)).toJSON().filter((edge: CGEdge) => desiredEdgeIds.has(edge.id));
+
+        return edges.sort((a: CGEdge, b: CGEdge) => a[genCollectiveTallyName()]-b[genCollectiveTallyName()]);
+    }
+
+    /**
+     * What connected nodes a target node is commonly done with, based on specific edge Single tally
+     * 
+     * @param nodeId 
+     * @param output 
+     * @returns 
+     */
+    async function commonlyDoneByOutput(nodeId: string, output: string): Promise<CGEdge[]> {
+        const realm: Realm = await MetaRealm.LoadableRealmManager.loadRealm({ metaRealmPath, loadableRealmPath });
+        const node: (Realm.Object & CGNode) | undefined = realm.objectForPrimaryKey(genNodeSchemaName(graphName), nodeId);
+        if(node === undefined) return [];
+
+        const desiredEdgeIds: Set<string> = new Set(node.edgeIds);
+        const edges: CGEdge[] = realm.objects(genEdgeSchemaName(graphName)).toJSON().filter((edge: CGEdge) => desiredEdgeIds.has(edge.id));
+
+        return edges.sort((a: CGEdge, b: CGEdge) => a[genSingleTallyName(output)]-b[genSingleTallyName(output)]);
+    }
+
+    /**
+     * What connected nodes a target node is highly rated with, based on specific edge Single tally
+     * 
+     * @param nodeId 
+     * @param output 
+     * @returns 
+     */
+    async function highlyRatedByOutput(nodeId: string, output: string): Promise<CGEdge[]> {
+        const realm: Realm = await MetaRealm.LoadableRealmManager.loadRealm({ metaRealmPath, loadableRealmPath });
+        const node: (Realm.Object & CGNode) | undefined = realm.objectForPrimaryKey(genNodeSchemaName(graphName), nodeId);
+        if(node === undefined) return [];
+
+        const desiredEdgeIds: Set<string> = new Set(node.edgeIds);
+        const edges: CGEdge[] = realm.objects(genEdgeSchemaName(graphName)).toJSON().filter((edge: CGEdge) => desiredEdgeIds.has(edge.id));
+        
+        return edges.sort((a: CGEdge, b: CGEdge) => a[genSingleAverageName(output)]-b[genSingleAverageName(output)]);
+    }
+
+    /**
+     * Evenly distributes a total weight of '1' to each central node and sets all other node weights to 0
+     * Then ranks all nodes and all their output attributes
+     * 
+     * @param centralNodeIds 
+     * @param iterations 
+     * @param dampingFactor 
+     * @returns 
+     */
+    async function rankMostInfluentialToCentralSet(centralNodeIds: string[], iterations: number = 20, dampingFactor: number = 0.85): Promise<Dict<Dict<number>>> {
+        const centralNodeIdSet: Set<string> = new Set(centralNodeIds);
+
+        // 1. Get node methods
+        const { allNodes: allNodesRawCopy, getNodeId, getNodeAttrs } = _getPageRankNodeMethods();
+
+        // 2. Get initial weighted node map: Id -> pointing to each Node's weights divided by sum of all nodes' weights
+        const initialMapRaw: Dict<Dict<number>> = getInitialWeights(allNodesRawCopy, getNodeId, getNodeAttrs);
+
+        // 3. Redistribute weights
+        for(let nodeId of Object.keys(initialMapRaw)) {
+            // 3.1. Give 1/n weight to each central node
+            if(centralNodeIdSet.has(nodeId)) DictUtils.mutateDict(initialMapRaw[nodeId], (attrKey: string, val: number) => 1/centralNodeIdSet.size);
+            // 3.2. Every other node has 0 weight
+            else DictUtils.multiplyDictScalar(initialMapRaw[nodeId], 0);
+        }
+        // console.log(rawInitialMap);
+        // console.log(initialMapBiased);
+
+        // 4. Convert biased initial map -> all nodes list
+        const allNodesBiased: CGNode[] = allNodesRawCopy.map((node: CGNode) => ({
+            ...node,
+            ...initialMapRaw[node.id],
+        }));
+        // console.log(allNodesBiased);
+
+        // console.log(this.getAllEdges());
+
+        // 5. Get edge methods
+        const { allEdges, getEdges, getEdgeAttrs, getDestinationNode } = _getPageRankEdgeMethods(allNodesBiased);
+        
+        // 6. Page Rank
+        return genericPageRank(initialMapRaw, allNodesBiased, getNodeId, getEdges, getEdgeAttrs, getDestinationNode, iterations, dampingFactor);
+    }
+
+    async function getMostInfluentialToCentralSet(targetAttr: string, centralNodeIds: string[], iterations: number = 20, dampingFactor: number = 0.85): Promise<RankedNode[]> {
+        const rankedNodes: Dict<Dict<number>> = await rankMostInfluentialToCentralSet(centralNodeIds, iterations, dampingFactor);
+
+        return Object.keys(rankedNodes).map((key: string) => ({ ...rankedNodes[key], id: key })).sort((a: RankedNode, b: RankedNode) =>  a[targetAttr]-b[targetAttr]);
+    }
+
     // INTERNAL UTILITY
     async function loadRealm(): Promise<Realm> { return await MetaRealm.LoadableRealmManager.loadRealm({ metaRealmPath, loadableRealmPath }) };
     async function reloadRealm(): Promise<Realm> { return await MetaRealm.LoadableRealmManager.reloadRealm({ metaRealmPath, loadableRealmPath }) };
@@ -275,9 +406,17 @@ const initializeRealmGraph = async ({ metaRealmPath, loadableRealmPath, graphNam
         getGraphEntity,
         
         rate,
+        undoRate,
         pageRank,
         recommend,
         recommendRank,
+
+        commonlyDoneWith,
+        commonlyDoneByOutput,
+        highlyRatedByOutput,
+
+        rankMostInfluentialToCentralSet,
+        getMostInfluentialToCentralSet,
     }
 }
 
