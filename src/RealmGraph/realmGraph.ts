@@ -348,7 +348,7 @@ const initializeRealmGraph = async ({ metaRealmPath, loadableRealmPath, graphNam
      * @param dampingFactor 
      * @returns 
      */
-    async function rankMostInfluentialToCentralSet(centralNodeIds: string[], iterations: number = 20, dampingFactor: number = 0.85): Promise<Dict<Dict<number>>> {
+    function rankMostInfluentialToCentralSet(centralNodeIds: string[], iterations: number = 20, dampingFactor: number = 0.85): Dict<Dict<number>> {
         const centralNodeIdSet: Set<string> = new Set(centralNodeIds);
 
         // 1. Get node methods
@@ -383,12 +383,6 @@ const initializeRealmGraph = async ({ metaRealmPath, loadableRealmPath, graphNam
         return genericPageRank(initialMapRaw, allNodesBiased, getNodeId, getEdges, getEdgeAttrs, getDestinationNode, iterations, dampingFactor);
     }
 
-    async function getMostInfluentialToCentralSet(targetAttr: string, centralNodeIds: string[], iterations: number = 20, dampingFactor: number = 0.85): Promise<RankedNode[]> {
-        const rankedNodes: Dict<Dict<number>> = await rankMostInfluentialToCentralSet(centralNodeIds, iterations, dampingFactor);
-
-        return Object.keys(rankedNodes).map((key: string) => ({ ...rankedNodes[key], id: key })).sort((a: RankedNode, b: RankedNode) =>  a[targetAttr]-b[targetAttr]);
-    }
-
     // INTERNAL UTILITY
     async function loadRealm(): Promise<Realm> { return await MetaRealm.LoadableRealmManager.loadRealm({ metaRealmPath, loadableRealmPath }) };
     async function reloadRealm(): Promise<Realm> { return await MetaRealm.LoadableRealmManager.reloadRealm({ metaRealmPath, loadableRealmPath }) };
@@ -417,16 +411,12 @@ const initializeRealmGraph = async ({ metaRealmPath, loadableRealmPath, graphNam
         
         rate,
         undoRate,
+        
         pageRank,
-        recommend,
-        recommendRank,
-
         commonlyDoneWith,
         commonlyDoneByOutput,
         highlyRatedByOutput,
-
         rankMostInfluentialToCentralSet,
-        getMostInfluentialToCentralSet,
     }
 }
 

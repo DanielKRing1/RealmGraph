@@ -51,20 +51,20 @@ export type RealmGraph = {
     undoRate:(propertyName: string, nodeIds: string[], rating: number, weights: number[], ratingMode: RatingMode) => RateReturn;
 
     pageRank: (iterations?: number, dampingFactor?: number) => Dict<Dict<number>>;
-    recommendRank: (centralNodeIds: string[], nodeTargetCentralWeight: number, edgeInflationMagnitude: number, iterations?: number, dampingFactor?: number) => Dict<Dict<number>>;
-    recommend: (
-        desiredAttrKey: string,
-        centralNodeIds: string[],
-        nodeTargetCentralWeight: number,
-        edgeInflationMagnitude: number,
-        iterations?: number,
-        dampingFactor?: number,
-    ) => RankedNode[];
+    // recommendRank: (centralNodeIds: string[], nodeTargetCentralWeight: number, edgeInflationMagnitude: number, iterations?: number, dampingFactor?: number) => Dict<Dict<number>>;
+    // recommend: (
+    //     desiredAttrKey: string,
+    //     centralNodeIds: string[],
+    //     nodeTargetCentralWeight: number,
+    //     edgeInflationMagnitude: number,
+    //     iterations?: number,
+    //     dampingFactor?: number,
+    // ) => RankedNode[];
 
     commonlyDoneWith: (targetNodeId: string) => Promise<CGEdge[]>;
     commonlyDoneByOutput: (nodeId: string, output: string) => Promise<CGEdge[]>;
     highlyRatedByOutput: (nodeId: string, output: string) => Promise<CGEdge[]>;
 
-    rankMostInfluentialToCentralSet: (centralNodeIds: string[], iterations?: number, dampingFactor?: number) => Promise<Dict<Dict<number>>>;
-    getMostInfluentialToCentralSet: (targetAttr: string, centralNodeIds: string[], iterations?: number, dampingFactor?: number) => Promise<RankedNode[]>;
+    rankMostInfluentialToCentralSet: (centralNodeIds: string[], iterations?: number, dampingFactor?: number) => Dict<Dict<number>>;
+    // getMostInfluentialToCentralSet: (targetAttr: string, centralNodeIds: string[], iterations?: number, dampingFactor?: number) => RankedNode[];
 };
