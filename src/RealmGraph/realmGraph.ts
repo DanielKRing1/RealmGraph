@@ -410,7 +410,9 @@ const initializeRealmGraph = async ({ metaRealmPath, loadableRealmPath, graphNam
         updateGraphProperties,
 
         getAllNodes,
+        getNode,
         getAllEdges,
+        getEdge,
         getGraphEntity,
         
         rate,
