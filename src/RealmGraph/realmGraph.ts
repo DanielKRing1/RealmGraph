@@ -72,10 +72,18 @@ const initializeRealmGraph = async ({ metaRealmPath, loadableRealmPath, graphNam
         const loadedGraphRealm: Realm = loadRealmSync();
         return loadedGraphRealm.objects(genNodeSchemaName(graphName));
     }
+    const getNode =  (nodeId: string): Realm.Object & CGNode | undefined => {
+        const loadedGraphRealm: Realm = loadRealmSync();
+        return loadedGraphRealm.objectForPrimaryKey(genNodeSchemaName(graphName), nodeId);
+    }
 
     const getAllEdges =  (): Realm.Results<Realm.Object & CGEdge> => {
         const loadedGraphRealm: Realm = loadRealmSync();
         return loadedGraphRealm.objects(genEdgeSchemaName(graphName));
+    }
+    const getEdge =  (edgeId: string): Realm.Object & CGEdge | undefined => {
+        const loadedGraphRealm: Realm = loadRealmSync();
+        return loadedGraphRealm.objectForPrimaryKey(genEdgeSchemaName(graphName), edgeId);
     }
 
     const getGraphEntity = (ids: string[], entityType: GraphEntity): CGNode | CGEdge => {

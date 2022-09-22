@@ -42,8 +42,10 @@ export type RealmGraph = {
     updateGraphProperties: (newPropertyNames: string[]) => Promise<void>
 
     getAllNodes: () => Realm.Results<Realm.Object & CGNode>;
-    getAllEdges: () => Realm.Results<Realm.Object & CGEdge>
-    getGraphEntity: (ids: string[], entityType: GraphEntity) => CGNode | CGEdge
+    getNode:  (nodeId: string) => Realm.Object & CGNode | undefined;
+    getAllEdges: () => Realm.Results<Realm.Object & CGEdge>;
+    getEdge:  (edgeId: string) => Realm.Object & CGEdge | undefined;
+    getGraphEntity: (ids: string[], entityType: GraphEntity) => CGNode | CGEdge;
 
     rate:(propertyName: string, nodeIds: string[], rating: number, weights: number[], ratingMode: RatingMode) => RateReturn;
     undoRate:(propertyName: string, nodeIds: string[], rating: number, weights: number[], ratingMode: RatingMode) => RateReturn;
