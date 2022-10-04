@@ -5,6 +5,7 @@ export type RealmGraphManager = {
     createGraph: (params: RGCreateParams) => Promise<RealmGraph>;
     rmGraph: (graphName: string) => void;
     loadGraphs: (metaRealmPath: string, loadableRealmPath: string) => Promise<number>;
+    closeAllGraphs: () => Promise<void>;
 
     getLoadableGraphNames: (metaRealmPath: string, loadableRealmPath: string) => string[];
     getAllLoadedGraphNames: () => string[];

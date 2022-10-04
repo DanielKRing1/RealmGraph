@@ -2,6 +2,8 @@ import fs from 'fs';
 
 import { RatingMode } from 'catalyst-graph';
 import MetaRealm from '@asianpersonn/metarealm';
+import RealmGraphManager from '../src';
+
 import { createRealmGraph } from '../src/RealmGraph/realmGraph';
 import { RealmGraph } from '../src/RealmGraph/types';
 import realmGraphManager from '../src/RealmGraphManager/realmGraphManager';
@@ -84,8 +86,7 @@ describe('RealmGraphManager', () => {
     });
 
     afterAll(async () => {
-        await MetaRealm.MetaRealmManager.closeAll();
-        await MetaRealm.LoadableRealmManager.closeAll();
+await RealmGraphManager.closeAllGraphs();
 
         if (fs.existsSync(TEST_DIRECTORY)) fs.rmSync(TEST_DIRECTORY, { recursive: true });
     });

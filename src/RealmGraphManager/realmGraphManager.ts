@@ -75,6 +75,11 @@ const createGraphManager = (): RealmGraphManager => {
         return graphNames.length;
     }
 
+    const closeAllGraphs = async () => {
+        await MetaRealm.MetaRealmManager.closeAll();
+        await MetaRealm.LoadableRealmManager.closeAll();
+    }
+
     const getLoadableGraphNames = (metaRealmPath: string, loadableRealmPath: string): string[] => {
         const graphNames: Set<string> = new Set<string>();
 
@@ -102,6 +107,7 @@ const createGraphManager = (): RealmGraphManager => {
         createGraph,
         rmGraph,
         loadGraphs,
+        closeAllGraphs,
 
         getLoadableGraphNames,
         getAllLoadedGraphNames,

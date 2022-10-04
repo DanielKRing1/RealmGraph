@@ -1,6 +1,8 @@
 import fs from 'fs';
 
 import MetaRealm from '@asianpersonn/metarealm';
+import RealmGraphManager from '../src';
+
 import { createRealmGraph, loadRealmGraph } from '../src/RealmGraph/realmGraph';
 import { RealmGraph } from '../src/RealmGraph/types';
 import { genEdgeSchemaName, genNodeSchemaName } from '../src/constants/naming';
@@ -120,8 +122,7 @@ describe('createRealmGraph', () => {
     });
 
     afterAll(async () => {
-        await MetaRealm.MetaRealmManager.closeAll();
-        await MetaRealm.LoadableRealmManager.closeAll();
+await RealmGraphManager.closeAllGraphs();
 
         if (fs.existsSync(TEST_DIRECTORY)) fs.rmSync(TEST_DIRECTORY, { recursive: true });
     });      
