@@ -90,7 +90,20 @@ const initializeRealmGraph = async ({ metaRealmPath, loadableRealmPath, graphNam
         return _catalystGraph.getGraphEntity(ids, entityType);
     }
 
-    const deleteGraph = async () => await _deleteGraphSchemas({ metaRealmPath, loadableRealmPath, graphName, reloadRealm });
+    const deleteGraph = async () => {
+        const loadedGraphRealm: Realm = await loadRealm();
+
+        // 1. Delete all objects in Realm
+        const allNodes: Realm.Results<Realm.Object & CGNode> = getAllNodes();
+        const allEdges: Realm.Results<Realm.Object & CGEdge> = getAllEdges();
+        loadedGraphRealm.write(() => {
+            loadedGraphRealm.delete(allNodes);
+            loadedGraphRealm.delete(allEdges);
+        });
+
+        // 2. Delete this Graph's schemas and reload without schemas
+        await _deleteGraphSchemas({ metaRealmPath, loadableRealmPath, graphName, reloadRealm });
+    }
 
     const updateGraphProperties = async (newPropertyNames: string[]) => {
         await _updateGraphProperties({ metaRealmPath, loadableRealmPath, graphName, newPropertyNames, reloadRealm })
