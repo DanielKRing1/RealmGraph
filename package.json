@@ -23,7 +23,7 @@
         "@asianpersonn/dict-utils": "^1.0.5",
         "@asianpersonn/metarealm": "^1.0.4",
         "@asianpersonn/pagerank": "^1.0.7",
-        "catalyst-graph": "^1.0.22",
+        "catalyst-graph": "^1.0.23",
         "realm": "^10.13.0"
     },
     "devDependencies": {
